@@ -1,0 +1,146 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4; /* Màu nền sáng */
+}
+
+/* Hộp đăng nhập */
+.login-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #007bff; /* Màu xanh cho tiêu đề */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Các phần tử nhập liệu */
+.input-container {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-container label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-container input:focus {
+    border-color: #007bff; /* Viền xanh khi focus */
+}
+
+/* Tùy chọn đăng nhập */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input {
+    margin-right: 5px;
+}
+
+.forgot-password {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.forgot-password:hover {
+    color: #0056b3;
+}
+
+/* Nút đăng nhập */
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff; /* Màu xanh nền */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Xanh đậm hơn khi hover */
+    transform: scale(1.05);
+}
+
+/* Thông báo đăng ký */
+.signup-prompt {
+    margin-top: 20px;
+}
+
+.signup-prompt a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.signup-prompt a:hover {
+    color: #0056b3;
+}
+.login-box {
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-button {
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+}
+.back-button {
+    margin-top: 20px;
+    background-color: #ccc;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.back-button:hover {
+    background-color: #bbb;
+}

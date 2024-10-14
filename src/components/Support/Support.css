@@ -1,0 +1,83 @@
+/* Container chính cho phần hỗ trợ */
+.support-container {
+    padding: 40px; /* Tăng padding cho không gian rộng hơn */
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8; /* Nền chính */
+    border-radius: 8px; /* Bo góc cho container */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+}
+
+/* Tiêu đề */
+h1, h2 {
+    color: #007bff; /* Màu sắc cho tiêu đề */
+    text-align: center; /* Căn giữa tiêu đề */
+    margin-bottom: 20px;
+}
+
+/* Phần câu hỏi thường gặp, thông tin hỗ trợ và hình ảnh */
+.faq-section, .info-section, .image-section {
+    margin-bottom: 30px;
+    padding: 20px; /* Padding cho các phần */
+    border: 1px solid #ccc; /* Viền nhẹ cho các phần */
+    border-radius: 5px; /* Bo góc cho phần */
+    transition: transform 0.3s, box-shadow 0.3s; /* Hiệu ứng chuyển động */
+    background-color: white; /* Nền trắng cho từng phần */
+}
+
+/* Hiệu ứng hover cho các phần */
+.faq-section:hover, .info-section:hover, .image-section:hover {
+    transform: translateY(-5px); /* Nâng lên khi hover */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15); /* Đổ bóng sâu hơn khi hover */
+}
+
+/* Danh sách câu hỏi thường gặp */
+.faq-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.faq-list li {
+    margin-bottom: 15px;
+    padding: 10px; /* Padding cho mỗi câu hỏi */
+    border: 1px solid #ccc; /* Viền nhẹ cho câu hỏi */
+    border-radius: 5px; /* Bo góc cho câu hỏi */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển động cho nền */
+}
+
+/* Hiệu ứng hover cho câu hỏi */
+.faq-list li:hover {
+    background-color: #e7f1ff; /* Thay đổi màu nền khi hover */
+}
+
+/* Hình ảnh */
+.support-image {
+    width: 100%;
+    height: auto;
+    margin-top: 15px;
+    border-radius: 5px; /* Bo góc cho hình ảnh */
+    transition: transform 0.3s; /* Hiệu ứng chuyển động */
+}
+
+/* Hiệu ứng zoom cho hình ảnh khi hover */
+.support-image:hover {
+    transform: scale(1.05); /* Phóng to hình ảnh khi hover */
+}
+.back-button {
+    background-color: #007bff; /* Màu nền của nút */
+    color: white; /* Màu chữ */
+    border: none; /* Không có viền */
+    border-radius: 5px; /* Bo góc cho nút */
+    padding: 10px 20px; /* Padding cho nút */
+    font-size: 16px; /* Kích thước chữ */
+    cursor: pointer; /* Con trỏ khi hover */
+    transition: background-color 0.3s; /* Hiệu ứng chuyển màu nền */
+    display: block; /* Để căn giữa */
+    margin: 20px auto; /* Tạo khoảng cách từ trên xuống và căn giữa */
+}
+
+/* Hiệu ứng hover cho nút */
+.back-button:hover {
+    background-color: #0056b3; /* Màu nền khi hover */
+}

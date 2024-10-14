@@ -1,0 +1,123 @@
+.footer {
+    background-color: #f8f8f8;
+    padding: 40px 20px;
+    border-top: 1px solid #e7e7e7;
+    position: relative;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-links {
+    flex: 1;
+    min-width: 200px;
+    margin: 0 20px;
+}
+
+.footer-links h4 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s;
+}
+
+.footer-links a {
+    display: block;
+    color: #666;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: color 0.3s, transform 0.2s; /* Add transform for scaling effect */
+}
+
+.footer-links a:hover {
+    color: #007bff;
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.footer-social {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-social a {
+    margin: 5px 10px;
+    color: #666;
+    font-size: 24px;
+    transition: color 0.3s, transform 0.2s; /* Add transform for scaling effect */
+}
+
+.footer-social a:hover {
+    color: #007bff;
+    transform: scale(1.1); /* Scale up on hover */
+}
+
+.newsletter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.newsletter h4 {
+    margin-bottom: 10px;
+}
+
+.newsletter input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: border-color 0.3s; /* Smooth border color change */
+}
+
+.newsletter input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove outline */
+}
+
+.newsletter button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Add transform for scaling effect */
+}
+
+.newsletter button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-to-top:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
