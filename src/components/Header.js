@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector} from 'react-redux';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Navbar.css'; 
+import { logOut } from '../redux/apiRequest';
+import { createAxios } from '../createInstance';
+import { logOutSuccess } from '../redux/authSlice';
 
 const Header = () => {
-
-
+    const user = useSelector((state) => state.auth.login.currentUser);
+    const dispatch = useDispatch();
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const accessToken = user?.acccessToken;
+    const id = user?._id;
+    let axiosJWT = createAxios(user,dispatch,logOutSuccess);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logOut(dispatch,id,navigate,accessToken,axiosJWT);
+    }
 
     const showButton = () => {
         if (window.innerWidth <= 960) {
@@ -39,15 +51,21 @@ const Header = () => {
                     <input type="text" placeholder="Tìm kiếm sản phẩm..." />
                     <i className="fas fa-search search-icon"></i>
                 </div>
-                <Link to='/taikhoan' className='nav-link'> 
-                    <i className='fas fa-user'></i> Tài khoản
+                <Link to='/profile' className='nav-link'> 
+                <i className='fas fa-user'></i>{user ? user.username : 'Tài khoản'}
                 </Link>
                 <Link to='/support' className='nav-link'>
                     <i className='fas fa-phone-alt'></i> Hỗ trợ
                 </Link>
-                <Link to='/stores' className='nav-link'>
-                    <i className='fas fa-store'></i> Hệ thống cửa hàng
-                </Link>
+                {user ? (
+                    <Link to='/logout' className='nav-link' onClick={handleLogout}>
+                        <i className='fas fa-sign-out-alt'></i> Log Out
+                    </Link>
+                ) : (
+                    <Link to='/login' className='nav-link'>
+                        <i className='fas fa-user-circle'></i> Sign In
+                    </Link>
+                )}
                 <Link to='/cart' className='nav-link'>
                     <i className='fas fa-shopping-cart'></i> Giỏ hàng
                 </Link>
@@ -72,14 +90,9 @@ const Header = () => {
                             Products
                         </Link>
                     </li>
-                    <li className='nav-item'>
-                        <Link to='/login' className='nav-links-mobile' onClick={closeMobileMenu}>
-                            Sign Up
-                        </Link>
-                    </li>
                 </ul>
 
-                <Link to="/hasaki-deals" className='navbar-bottom-link'>
+                <Link to="/deals" className='navbar-bottom-link'>
                     <i className='fas fa-gift'></i> Hasaki Deals
                 </Link>
                 <Link to="/hot-deals" className='navbar-bottom-link'>
@@ -99,4 +112,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Header; 
