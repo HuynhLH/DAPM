@@ -34,7 +34,7 @@ const authController ={
                 admin: user.admin
             },
             process.env.JWT_ACCESS_KEY,
-            {expiresIn: "20s"}
+            {expiresIn: "1h"}
         );  
     },
     //GENERATE REFRESH TOKEN
@@ -63,7 +63,7 @@ const authController ={
                 return res.status(404).json("sai Password!");
             }
             if(user && validPassword){
-            const acccessToken = authController.generateAccessToken(user);
+            const accessToken = authController.generateAccessToken(user);
             const refreshToken = authController.generaterefreshToken(user);
             refreshTokens.push(refreshToken);
             res.cookie("refreshToken",refreshToken,{
@@ -72,8 +72,8 @@ const authController ={
                 path:"/",
                 samesite:"strict",
             })
-            const {password, ...others} = user._doc;
-                res.status(200).json({...others,acccessToken});
+            const { password, ...others } = user._doc;
+    res.status(200).json({ ...others, accessToken, admin: user.admin });
             }
 
         } catch (error) {
