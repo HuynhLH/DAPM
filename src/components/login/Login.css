@@ -144,3 +144,24 @@
 .back-button:hover {
     background-color: #bbb;
 }
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.error-message {
+    color: red;
+    margin-top: 10px;
+}
+.buttongoback1{
+    margin-top: auto;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+}
+.buttongoback1:hover{
+    background-color: #0056b3;
+}

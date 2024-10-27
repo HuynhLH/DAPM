@@ -1,0 +1,102 @@
+/* src/components/UserCart/UserCart.css */
+.user-cart {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.user-cart h1 {
+    font-size: 2rem;
+    color: #343a40;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.user-cart table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.user-cart th, .user-cart td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.user-cart th {
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.user-cart td {
+    color: #495057;
+}
+
+.user-cart tbody tr:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.3s;
+}
+
+.user-cart p {
+    font-size: 1.2rem;
+    color: #343a40;
+    font-weight: bold;
+    text-align: right;
+}
+
+.user-cart button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.user-cart button:hover {
+    background-color: #218838;
+}
+/* src/components/UserCart/UserCart.css */
+
+.product-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.product-image:hover {
+    transform: scale(1.1);
+}
+
+/* Table adjustments */
+.user-cart table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.user-cart th, .user-cart td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.user-cart th {
+    font-weight: bold;
+    color: #6c757d;
+}

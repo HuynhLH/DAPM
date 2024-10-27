@@ -1,0 +1,58 @@
+/* UserList.css */
+.user-list-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: auto;
+    transition: transform 0.3s;
+}
+
+.user-list-container:hover {
+    transform: scale(1.02);
+}
+
+.title {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th, .user-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-row:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+.delete-button {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #e60000;
+    transform: scale(1.05);
+}
+
+.loading, .error, .no-users {
+    text-align: center;
+    color: #666;
+    font-size: 18px;
+}

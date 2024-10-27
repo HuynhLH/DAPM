@@ -1,15 +1,19 @@
-const mongoose = require("mongoose");
-
+const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    Mapd: String,
-    Name: String,
-    description: String,
-    price: Number,
-    image_url: String,
-    category_id: Number,
-    created_at: Date,
-    updated_at: Date,
-  });
+  Mapd: {
+    type: String,
+    default: function () {
+      return 'SP' + Math.floor(Math.random() * 10000); 
+    },
+    unique: true,
+  },
+  Name: { type: String, required: true },
+  description: String,
+  price: { type: Number, required: true },
+  image_url: String,
+  category_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
+  isFeatured: { type: Boolean, default: false }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Product', productSchema);

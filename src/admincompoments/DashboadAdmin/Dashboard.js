@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import Card from './Card';
 import AdminProductManager from '../AdminProductManager';
-import AdminDealsManager from '../admindeals/AdminDealsManager'; 
+import AdminDealsManager from '../admindeals/AdminDealsManager';
+import UserList from '../adminuserlist/UserList';
+import CategoryPage from '../admincaterogy/CategoryPage';
+import Cart from '../adminCart/AdminCartManager';
 import './Dashboard.css';
 import { logOut } from '../../redux/apiRequest';
 import { createAxios } from '../../createInstance';
 import { logOutSuccess } from '../../redux/authSlice';
+
 
 const Dashboard = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
@@ -32,22 +36,18 @@ const Dashboard = () => {
                 return <AdminProductManager />; 
             case 'deals':
                 return <AdminDealsManager />;
-            case 'staff':
-                return (
-                    <Card title="Danh sách nhân viên" content={
-                        <ul className="admin-staff-list">
-                            <li>Nguyễn Văn A - Quản lý</li>
-                            <li>Trần Thị B - Nhân viên</li>
-                        </ul>
-                    } />
-                );
+            case 'userlist':
+                return <UserList/>;
+            case 'cart':
+                return <Cart/>;
+            case 'category':
+                return <CategoryPage />;
             case 'customer':
                 return <Card title="Tổng số khách hàng" content={<p className="admin-customer-count">300</p>} />;
             default:
                 return null;
         }
     };
-
     return (
         <div className="admin-dashboard-container">
             <header className="admin-dashboard-header">
@@ -71,7 +71,9 @@ const Dashboard = () => {
                         <li onClick={() => setSelectedCategory('overview')}>Tổng Quan</li>
                         <li onClick={() => setSelectedCategory('product')}>Sản Phẩm</li>
                         <li onClick={() => setSelectedCategory('deals')}>Deals</li>
-                        <li onClick={() => setSelectedCategory('staff')}>Nhân Viên</li>
+                        <li onClick={() => setSelectedCategory('userlist')}>Tài khoản User</li>
+                        <li onClick={() => setSelectedCategory('category')}>Loại hàng</li>
+                        <li onClick={() => setSelectedCategory('cart')}>Giỏ hàng</li>
                         <li onClick={() => setSelectedCategory('customer')}>Khách Hàng</li>
                     </ul>
                 </nav>

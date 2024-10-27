@@ -1,142 +1,107 @@
 /* Profile.css */
-
 .profile-container {
-    max-width: 600px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    background-color: #fff; /* Nền trắng */
 }
 
 .profile-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
+    font-size: 24px;
     margin-bottom: 20px;
 }
 
 .profile-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
 .avatar-container {
+    display: flex;
+    justify-content: center;
     margin-bottom: 20px;
 }
 
 .profile-avatar {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #4CAF50;
 }
 
-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.input-group {
+    margin-bottom: 15px;
 }
 
-label {
-    font-size: 18px;
-    font-weight: 500;
-    color: #555;
+.input-group label {
+    display: block;
     margin-bottom: 5px;
+    font-weight: bold;
 }
 
-.username-input, 
-.email-input, 
+.username-input,
+.email-input,
 .password-input {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-}
-
-.username-input:focus, 
-.email-input:focus, 
-.password-input:focus {
-    border-color: #4CAF50;
-}
-
-.username-display, 
-.email-display {
-    font-size: 18px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    text-align: center;
+    border-radius: 4px;
 }
 
 .button-group {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: space-between;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
+.save-button,
+.cancel-button,
+.edit-button,
+.register-button,
+.goback-button {
+    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.edit-button, .save-button {
-    background-color: #4CAF50;
+.save-button {
+    background-color: #28a745; 
     color: white;
-}
-
-.edit-button:hover, .save-button:hover {
-    background-color: #45a049;
 }
 
 .cancel-button {
-    background-color: #f44336;
+    background-color: #dc3545; 
     color: white;
 }
 
-.cancel-button:hover {
-    background-color: #e03131;
-}
-
-.goback-button {
-    background-color: #008CBA;
+.edit-button {
+    background-color: #007bff; 
     color: white;
 }
 
-.goback-button:hover {
-    background-color: #007bb5;
+.no-account-container {
+    margin-top: 20px;
+    text-align: center;
 }
 
 .profile-message {
-    font-size: 18px;
-    color: #555;
-    text-align: center;
-    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-@media (max-width: 768px) {
-    .profile-container {
-        padding: 15px;
-    }
-
-    .button-group {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    button {
-        width: 100%;
-    }
+.register-button {
+    background-color: #17a2b8;
+    color: white;
+    margin-bottom: 10px;
 }
 
+.goback-button {
+    background-color: #6c757d; /* Màu xám */
+    color: white;
+}

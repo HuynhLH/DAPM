@@ -1,0 +1,131 @@
+/* CategoryPage.css */
+.category-page {
+    padding: 20px;
+    text-align: center;
+    background-color:#f9f9f9;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color:aqua;
+    margin-bottom: 40px;
+    position: relative;
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .category-card {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+  }
+  
+  .category-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .category-card h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+  }
+  
+  .category-card p {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+  }
+  
+  .category-card button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  .category-card button:hover {
+    background-color: #c0392b;
+  }
+  .category-page {
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .add-category-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-category-form input {
+    flex: 1; 
+    padding: 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .add-category-form input:focus {
+    border-color: #3e8e41; 
+    outline: none; 
+  }
+  
+  .add-category-form button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .add-category-form button:hover {
+    background-color: #45a049; 
+  }
+  
+  .category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px; 
+  }
+  
+  

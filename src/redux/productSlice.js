@@ -1,4 +1,3 @@
-// src/redux/productSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -9,12 +8,22 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
 
 export const addProduct = createAsyncThunk('products/addProduct', async (newProduct) => {
     await axios.post('http://localhost:5000/api/products/add', newProduct);
-    return newProduct; // Return the new product for updating the state
+    return newProduct; 
 });
 
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (id) => {
     await axios.delete(`http://localhost:5000/api/products/${id}`);
-    return id; // Return the id of the deleted product for updating the state
+    return id; 
+});
+
+export const updateProduct = createAsyncThunk('products/updateProduct', async ({ id, updatedData }) => {
+    const response = await axios.put(`http://localhost:5000/api/products/${id}`, updatedData);
+    return response.data; 
+});
+
+export const updateFeaturedProduct = createAsyncThunk('products/updateFeaturedProduct', async ({ id, isFeatured }) => {
+    const response = await axios.put(`http://localhost:5000/api/products/featured/${id}`, { isFeatured });
+    return response.data; 
 });
 
 const productSlice = createSlice({
@@ -35,6 +44,18 @@ const productSlice = createSlice({
             })
             .addCase(deleteProduct.fulfilled, (state, action) => {
                 state.products = state.products.filter(product => product._id !== action.payload);
+            })
+            .addCase(updateProduct.fulfilled, (state, action) => {
+                const index = state.products.findIndex(product => product._id === action.payload._id);
+                if (index !== -1) {
+                    state.products[index] = action.payload;
+                }
+            })
+            .addCase(updateFeaturedProduct.fulfilled, (state, action) => {
+                const index = state.products.findIndex(product => product._id === action.payload._id);
+                if (index !== -1) {
+                    state.products[index] = action.payload;
+                }
             });
     },
 });

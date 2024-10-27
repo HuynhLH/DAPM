@@ -3,6 +3,7 @@ import './Navbar.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/productSlice';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -11,6 +12,9 @@ const Navbar = () => {
     useEffect(() => {
         dispatch(fetchProducts()); 
     }, [dispatch]);
+
+    // Filter for featured products
+    const featuredProducts = products.filter(product => product.isFeatured);
 
     return (
         <div className="navbar">
@@ -37,28 +41,32 @@ const Navbar = () => {
                         <i className="fas fa-book"></i>
                         <h3>Cẩm nang</h3>
                     </div>
+                    <Link to="/recentlyViewe">
                     <div className="promotion-card">
                         <i className="fas fa-eye"></i>
                         <h3>Đã xem</h3>
                     </div>
+                    </Link>
                 </div>
 
                 <div className="products-container">
                     <h2>Sản phẩm nổi bật</h2>
                     <div className="products-grid">
-                        {products.map((product) => (
-                            <div className="product-card" key={product._id}>
-                                <img src={product.image_url} alt={product.Name} className="product-image" />
-                                <div className="product-info">
-                                    <h3 className="product-name">{product.Name}</h3>
-                                    <div className="product-pricing">
-                                        <span className="product-price">{product.price} ₫</span>
-                                        {/* Giá cũ */}
+                        {featuredProducts.length > 0 ? (
+                            featuredProducts.map((product) => (
+                                <div className="product-card" key={product._id}>
+                                    <img src={product.image_url} alt={product.Name} className="product-image" />
+                                    <div className="product-info">
+                                        <h3 className="product-name">{product.Name}</h3>
+                                        <div className="product-pricing">
+                                            <span className="product-price">{product.price} ₫</span>
+                                        </div>
                                     </div>
-                                    {/* Thông tin khuyến mãi */}
                                 </div>
-                            </div>
-                        ))}
+                            ))
+                        ) : (
+                            <p className="no-featured-products">Không có sản phẩm nổi bật nào.</p>
+                        )}
                     </div>
                 </div>
             </div>

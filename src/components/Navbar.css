@@ -146,7 +146,7 @@
     height: 55vh;
     position: absolute;
     top: 96px;
-    left: -100%; /* Đẩy menu ra ngoài khung hình khi chưa nhấn */
+    left: -100%; 
     opacity: 0;
     transition: all 0.5s ease;
     background: linear-gradient(135deg, #2c3e50, #0c7c26); 
@@ -155,7 +155,6 @@
     padding: 0;
 }
 
-/* Khi menu được kích hoạt (click) */
 .nav-menu.active {
     left: 0; 
     opacity: 1; 

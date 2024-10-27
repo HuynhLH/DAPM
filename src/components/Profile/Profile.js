@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom'; 
-import { logOut } from '../../redux/apiRequest';
 
 const Profile = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
@@ -19,7 +18,11 @@ const Profile = () => {
     };
 
     const goBack = () => {
-        navigate(-1); // Điều hướng về trang chủ hoặc trang trước
+        navigate(-1); 
+    };
+
+    const handleRegister = () => {
+        navigate('/register'); 
     };
 
     return (
@@ -29,40 +32,44 @@ const Profile = () => {
                 <div className="profile-info">
                     <div className="avatar-container">
                         <img 
-                            src={'HINH1.jpg'} // Kiểm tra lại file ảnh của bạn có tồn tại không
+                            src={'HINH1.jpg'} 
                             alt="Avatar" 
                             className="profile-avatar"
                         />
                     </div>
-                    <form onSubmit={handleSaveChanges}>
-                        <label htmlFor="username">Tên đăng nhập:</label>
-                        {isEditable ? (
-                            <input 
-                                type="text" 
-                                id="username" 
-                                value={username} 
-                                onChange={(e) => setUsername(e.target.value)} 
-                                className="username-input"
-                            />
-                        ) : (
-                            <p className="username-display">{username}</p>
-                        )}
+                    <form onSubmit={handleSaveChanges} className="profile-form">
+                        <div className="input-group">
+                            <label htmlFor="username">Tên đăng nhập:</label>
+                            {isEditable ? (
+                                <input 
+                                    type="text" 
+                                    id="username" 
+                                    value={username} 
+                                    onChange={(e) => setUsername(e.target.value)} 
+                                    className="username-input"
+                                />
+                            ) : (
+                                <p className="username-display">{username}</p>
+                            )}
+                        </div>
 
-                        <label htmlFor="email">Email:</label>
-                        {isEditable ? (
-                            <input 
-                                type="email" 
-                                id="email" 
-                                value={email} 
-                                onChange={(e) => setEmail(e.target.value)} 
-                                className="email-input"
-                            />
-                        ) : (
-                            <p className="email-display">{email}</p>
-                        )}
+                        <div className="input-group">
+                            <label htmlFor="email">Email:</label>
+                            {isEditable ? (
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    value={email} 
+                                    onChange={(e) => setEmail(e.target.value)} 
+                                    className="email-input"
+                                />
+                            ) : (
+                                <p className="email-display">{email}</p>
+                            )}
+                        </div>
 
                         {isEditable && (
-                            <>
+                            <div className="input-group">
                                 <label htmlFor="password">Thay đổi mật khẩu:</label>
                                 <input 
                                     type="password" 
@@ -70,7 +77,7 @@ const Profile = () => {
                                     placeholder="Nhập mật khẩu mới" 
                                     className="password-input"
                                 />
-                            </>
+                            </div>
                         )}
 
                         <div className="button-group">
@@ -87,8 +94,9 @@ const Profile = () => {
                     </form>
                 </div>
             ) : (
-                <div>
-                    <p className="profile-message">Bạn chưa đăng nhập.</p>
+                <div className="no-account-container">
+                    <p className="profile-message">Bạn chưa có tài khoản.</p>
+                    <button onClick={handleRegister} className='register-button'>Đăng ký tài khoản</button>
                     <button onClick={goBack} className='goback-button'>Quay về trang chính</button>
                 </div>
             )}

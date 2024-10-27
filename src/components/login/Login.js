@@ -1,24 +1,31 @@
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import './Login.css';
 import { loginUser } from "../../redux/apiRequest";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const Login = ({ setUserRole }) => {
+const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  
+    // Lấy thông tin lỗi từ Redux
+  const error = useSelector((state) => state.auth.login.error); 
 
   const handleLogin = async (e) => {
       e.preventDefault();
-      const newUser ={
+      const newUser = {
           username: username,
           password: password,
       };  
-  await loginUser(newUser,dispatch,navigate);  
+      try {
+          await loginUser(newUser, dispatch, navigate);  
+      } catch (err) {
+          console.error("Login failed:", err); 
+      }
   };
+
   const goBack = () => {
       navigate("/"); 
   };
@@ -57,6 +64,7 @@ const Login = ({ setUserRole }) => {
                   </div>
                   <button type="submit" className="login-button">Đăng nhập</button>
               </form>
+              {error && <p className="error-message">Sai tài khoản hoặc mật khẩu!</p>} 
               <p className="signup-prompt">
               Chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
               </p>

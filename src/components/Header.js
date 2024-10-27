@@ -10,19 +10,19 @@ import { logOutSuccess } from '../redux/authSlice';
 const Header = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
-    const accessToken = user?.acccessToken;
+    const accessToken = user?.accessToken;
     const id = user?._id;
-    let axiosJWT = createAxios(user,dispatch,logOutSuccess);
+    let axiosJWT = createAxios(user, dispatch, logOutSuccess);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
-    const navigate = useNavigate();
 
     const handleLogout = () => {
-        logOut(dispatch,id,navigate,accessToken,axiosJWT);
-    }
+        logOut(dispatch, id, navigate, accessToken, axiosJWT);
+    };
 
     const showButton = () => {
         if (window.innerWidth <= 960) {
@@ -66,7 +66,7 @@ const Header = () => {
                         <i className='fas fa-user-circle'></i> Sign In
                     </Link>
                 )}
-                <Link to='/cart' className='nav-link'>
+                <Link to='/usercart' className='nav-link'>
                     <i className='fas fa-shopping-cart'></i> Giỏ hàng
                 </Link>
             </div>
@@ -95,16 +95,13 @@ const Header = () => {
                 <Link to="/deals" className='navbar-bottom-link'>
                     <i className='fas fa-gift'></i> Hasaki Deals
                 </Link>
-                <Link to="/hot-deals" className='navbar-bottom-link'>
+                <Link to="/hotdeals" className='navbar-bottom-link'>
                     <i className='fas fa-fire'></i> Hot Deals
                 </Link>
-                <Link to="/best-sellers" className='navbar-bottom-link'>
-                    <i className='fas fa-star'></i> Bán chạy
+                <Link to="/uudai" className='navbar-bottom-link'>
+                    <i className='fas fa-tags'></i> Bán chạy
                 </Link>
-                <Link to="/deals" className='navbar-bottom-link'>
-                    <i className='fas fa-tags'></i> Ưu đãi
-                </Link>
-                <Link to="/products" className='navbar-bottom-link'>
+                <Link to="/produtcpage" className='navbar-bottom-link'>
                     <i className='fas fa-box'></i> Sản phẩm
                 </Link>
             </div>

@@ -7,12 +7,17 @@ const userRoute = require("./routes/user");
 const cookieParser = require('cookie-parser');  
 const productRoutes = require('./routes/productRoutes');
 const dealsRoutes = require('./routes/dealRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const Cart = require('./routes/cartRoutes');
+const recentlyViewed = require('./routes/RecentlyViewedRoutes');
+
 
 dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+
 
 mongoose.connect(process.env.MONGODB_URL, {
 })
@@ -24,6 +29,12 @@ app.use("/v1/auth",authRoute);
 app.use("/v1/user",userRoute);
 app.use("/api/products", productRoutes);
 app.use("/api/deals",dealsRoutes);
+app.use("/api/categories",categoryRoutes);
+app.use("/api/carts",Cart);
+app.use("/api/recentlyviewed",recentlyViewed);
+
+
+
 
 // Khởi chạy server
 const PORT = 5000;

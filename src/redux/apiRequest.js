@@ -1,5 +1,7 @@
 import axios from "axios";
 import { loginFailed, loginStart, loginSuccess, logOutFailed, logOutStart, logOutSuccess, registerFailed, registerStart, registerSuccess } from "./authSlice";
+import { getUsersFailed, getUsersStart, getUsersSuccess } from "./userSlice";
+import { deleteUserFailed, deleteUserStart, deleteUserSuccess } from "./userSlicedelete";
 
 export const loginUser = async(user,dispatch,navigate) =>{
     dispatch(loginStart());
@@ -13,7 +15,6 @@ export const loginUser = async(user,dispatch,navigate) =>{
         }
     } catch (error) {
         dispatch(loginFailed());
-        throw error; 
     }
 }
 export const registerUser = async(user, dispatch, navigate) => {
@@ -33,9 +34,39 @@ export const logOut = async(dispatch, id, navigate, accessToken, axiosJWT) => {
             headers: { token: `Bearer ${accessToken}` }
         });
         dispatch(logOutSuccess());
-        navigate("/login"); // Correctly navigate after logout
+        navigate("/login"); 
     } catch (err) {
         console.error("Logout failed:", err);
         dispatch(logOutFailed());
     }
 }
+
+export const getAllUsers = async (accessToken, dispatch) => {
+    dispatch(getUsersStart());
+    try {
+        const res = await axios.get("http://localhost:5000/v1/user/", {
+            headers: { token: `Bearer ${accessToken}` },
+        });
+        dispatch(getUsersSuccess(res.data));
+    } catch (error) {
+        console.error("Lỗi khi tải danh sách người dùng:", error.response ? error.response.data : error.message);
+        dispatch(getUsersFailed());
+    }
+};
+export const deleteUser = async (id, accessToken, dispatch) => {
+    dispatch(deleteUserStart());
+    try {
+        await axios.delete(`http://localhost:5000/v1/user/${id}`, {
+            headers: { token: `Bearer ${accessToken}` },
+        });
+        dispatch(deleteUserSuccess());
+        getAllUsers(accessToken, dispatch); 
+    } catch (error) {
+        console.error("Lỗi khi xóa người dùng:", error.response ? error.response.data : error.message);
+        dispatch(deleteUserFailed());
+    }
+};
+
+
+
+

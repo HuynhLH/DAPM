@@ -9,7 +9,7 @@ import { BrowserRouter as Router } from 'react-router-dom'; // Import BrowserRou
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
-        <Router> {/* Bọc App trong Router */}
+        <Router> 
             <App />
         </Router>
     </Provider>
