@@ -1,33 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const cartSlice = createSlice({
-    name: 'cart',
+    name: "cart",
     initialState: {
-        products: [],
+        items: [],
+        total: 0,
     },
     reducers: {
-        addProduct: (state, action) => {
-            const productIndex = state.products.findIndex(product => product._id === action.payload._id);
-            if (productIndex >= 0) {
-                state.products[productIndex].quantity += action.payload.quantity;
-            } else {
-                state.products.push({ ...action.payload, quantity: 1 });
-            }
+        addToCart: (state, action) => {
+            state.items.push(action.payload);
+            state.total += action.payload.price; // Cộng dồn giá trị sản phẩm vào tổng
         },
-        removeProduct: (state, action) => {
-            state.products = state.products.filter(product => product._id !== action.payload);
-        },
-        updateProductQuantity: (state, action) => {
-            const productIndex = state.products.findIndex(product => product._id === action.payload._id);
-            if (productIndex >= 0) {
-                state.products[productIndex].quantity = action.payload.quantity;
+        removeFromCart: (state, action) => {
+            const index = state.items.findIndex(item => item.id === action.payload.id);
+            if (index !== -1) {
+                state.total -= state.items[index].price; // Trừ giá trị sản phẩm ra khỏi tổng
+                state.items.splice(index, 1); // Xóa sản phẩm khỏi giỏ hàng
             }
         },
         clearCart: (state) => {
-            state.products = [];
+            state.items = [];
+            state.total = 0; // Đặt lại tổng
         },
     },
 });
 
-export const { addProduct, removeProduct, updateProductQuantity, clearCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;

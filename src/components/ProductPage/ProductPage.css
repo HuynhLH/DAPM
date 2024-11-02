@@ -11,7 +11,7 @@
 
 .loading-message, .error-message {
     text-align: center;
-    color: #ff0000; /* Đỏ cho lỗi */
+    color: #ff0000; 
 }
 
 .product-grid {
@@ -45,10 +45,7 @@
     margin: 10px 0;
 }
 
-.product-description {
-    font-size: 0.9em;
-    color: #555;
-}
+
 
 .product-price {
     font-size: 1.5em;
@@ -56,7 +53,7 @@
     margin: 10px 0;
 }
 
-.add-to-cart-button {
+.add-to-cart-button1 {
     background-color: #f60;
     color: #fff;
     border: none;
@@ -66,7 +63,7 @@
     transition: background-color 0.2s;
 }
 
-.add-to-cart-button:hover {
+.add-to-cart-button1:hover {
     background-color: #e55;
 }
 .price-filter {
@@ -86,7 +83,7 @@
 
 .price-filter input:focus {
     border-color: #007bff; /* Màu xanh khi focus */
-    outline: none; /* Không có đường viền */
+    outline: none; 
 }
 
 .sort-options {
@@ -111,7 +108,44 @@
 }
 
 .sort-options select:focus {
-    border-color: #007bff; /* Màu xanh khi focus */
-    outline: none; /* Không có đường viền */
+    border-color: #007bff; 
+    outline: none; 
 }
 
+.search-bar {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-button {
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+.price-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.sort-select {
+    padding: 10px;
+    margin: 0 5px;
+}

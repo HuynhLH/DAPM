@@ -1,8 +1,13 @@
-const RecentlyViewed = require('../models/RecentlyVieweds')
+const RecentlyViewed = require('../models/RecentlyVieweds');
 
 // Thêm sản phẩm vào đã xem
 exports.addRecentlyViewed = async (req, res) => {
     try {
+        // Kiểm tra xem userid và productid có tồn tại trong req.body hay không
+        if (!req.body.userid || !req.body.productid) {
+            return res.status(400).json({ message: 'UserId and ProductId are required' });
+        }
+
         const recentlyViewed = new RecentlyViewed(req.body);
         await recentlyViewed.save();
         res.status(201).json(recentlyViewed);
@@ -11,22 +16,33 @@ exports.addRecentlyViewed = async (req, res) => {
     }
 };
 
-// Lấy sản phẩm đã xem của người dùng
+
+// Lấy sản phẩm đã xem của người dùng theo id
 exports.getRecentlyViewedByUserId = async (req, res) => {
     try {
-        const recentlyViewed = await RecentlyViewed.find({ user_id: req.params.userId }).populate('product_id');
-        res.status(200).json(recentlyViewed);
+        const userId = req.params.id; 
+        const recentlyViewedItems = await RecentlyViewed.find({ userid: userId }).populate('productid');
+
+        if (!recentlyViewedItems || recentlyViewedItems.length === 0) {
+            return res.status(404).json({ message: 'No recently viewed products found' });
+        }
+
+        res.status(200).json(recentlyViewedItems);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error fetching recently viewed products:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
 
-// Xóa sản phẩm đã xem
+// Xóa tất cả sản phẩm đã xem của người dùng theo id
 exports.deleteRecentlyViewed = async (req, res) => {
     try {
-        await RecentlyViewed.deleteMany({ user_id: req.params.userId });
-        res.status(200).json({ message: 'Recently viewed items deleted' });
+        const userId = req.params.id; // Sử dụng 'id' thay vì 'userId'
+        await RecentlyViewed.deleteMany({ userid: userId });
+        res.status(204).send(); // Trả về mã 204 No Content
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Error deleting recently viewed products:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+

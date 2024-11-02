@@ -10,9 +10,13 @@ const AdminProductManager = () => {
     description: '',
     price: '',
     image_url: '',
-    category_id: '',
+    category: '',
+    colors: [],
+    sizes: [],
+    brand: '',
     isFeatured: false,
   });
+  
   const [editMode, setEditMode] = useState(false);
   const [currentProductId, setCurrentProductId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -50,30 +54,54 @@ const AdminProductManager = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setNewProduct({ ...newProduct, [name]: type === 'checkbox' ? checked : value });
+    if (name === 'colors' || name === 'sizes') {
+      const values = Array.from(e.target.selectedOptions, option => option.value);
+      setNewProduct({ ...newProduct, [name]: values });
+    } else {
+      setNewProduct({ ...newProduct, [name]: type === 'checkbox' ? checked : value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (editMode) {
-        await axios.put(`http://localhost:5000/api/products/${currentProductId}`, newProduct);
-        setMessage('Sản phẩm đã được cập nhật thành công!');
-      } else {
         const productWithMapd = { ...newProduct, Mapd: `MAPD-${Date.now()}` };
-        await axios.post('http://localhost:5000/api/products/add', productWithMapd);
-        setMessage('Sản phẩm đã được thêm thành công!');
-      }
-      setNewProduct({ Name: '', description: '', price: '', image_url: '', category_id: '', isFeatured: false });
-      setEditMode(false);
-      fetchProducts();
+        console.log('Dữ liệu gửi đi:', productWithMapd); // Ghi lại dữ liệu gửi đi
+
+        if (editMode) {
+            await axios.put(`http://localhost:5000/api/products/${currentProductId}`, newProduct);
+            setMessage('Sản phẩm đã được cập nhật thành công!');
+        } else {
+            await axios.post('http://localhost:5000/api/products/add', productWithMapd);
+            setMessage('Sản phẩm đã được thêm thành công!');
+        }
+
+        resetForm();
+        fetchProducts();
     } catch (err) {
-      setMessage('Có lỗi xảy ra!');
+        console.error('Lỗi từ server:', err.response.data); 
+        setMessage('Có lỗi xảy ra: ' + (err.response?.data?.message || '')); 
     }
+};
+
+  const resetForm = () => {
+    setNewProduct({
+      Name: '',
+      description: '',
+      price: '',
+      image_url: '',
+      category: '',
+      colors: [],
+      sizes: [],
+      brand: '',
+      isFeatured: false,
+    });
+    setEditMode(false);
+    setCurrentProductId(null);
   };
 
   const handleEdit = (product) => {
-    setNewProduct({ ...product, isFeatured: product.isFeatured });
+    setNewProduct({ ...product });
     setCurrentProductId(product._id);
     setEditMode(true);
   };
@@ -92,7 +120,7 @@ const AdminProductManager = () => {
 
   const filteredProducts = products.filter(product => {
     const matchesName = product.Name.toLowerCase().includes(searchName.toLowerCase());
-    const matchesCategory = selectedCategory ? product.category_id === selectedCategory : true;
+    const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
     return matchesName && matchesCategory;
   });
 
@@ -161,8 +189,8 @@ const AdminProductManager = () => {
         />
         <select
           className="admin-product-manager-input"
-          name="category_id"
-          value={newProduct.category_id}
+          name="category"  
+          value={newProduct.category}
           onChange={handleChange}
           required
         >
@@ -171,6 +199,36 @@ const AdminProductManager = () => {
             <option key={category._id} value={category._id}>{category.name}</option>
           ))}
         </select>
+        <select
+          className="admin-product-manager-input"
+          name="colors"
+          multiple
+          value={newProduct.colors}
+          onChange={handleChange}
+        >
+          <option value="red">Đỏ</option>
+          <option value="blue">Xanh dương</option>
+          <option value="green">Xanh lá</option>
+        </select>
+        <select
+          className="admin-product-manager-input"
+          name="sizes"
+          multiple
+          value={newProduct.sizes}
+          onChange={handleChange}
+        >
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+        <input
+          className="admin-product-manager-input"
+          name="brand"
+          placeholder="Thương hiệu"
+          value={newProduct.brand}
+          onChange={handleChange}
+        />
         <label>
           <input
             type="checkbox"
@@ -197,18 +255,13 @@ const AdminProductManager = () => {
               <h2 className="admin-product-manager-item-title">{product.Name}</h2>
               <p className="admin-product-manager-item-description">{product.description}</p>
               <p className="admin-product-manager-item-price">Giá: {product.price} VND</p>
-              <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} width="100" />
-              <button className="admin-product-manager-item-edit" onClick={() => handleEdit(product)}>
-                Sửa
-              </button>
-              <button className="admin-product-manager-item-delete" onClick={() => handleDelete(product._id)}>
-                Xóa
-              </button>
+              <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} />
+              <button className="admin-product-manager-button" onClick={() => handleEdit(product)}>Chỉnh sửa</button>
+              <button className="admin-product-manager-button" onClick={() => handleDelete(product._id)}>Xóa</button>
             </li>
           ))}
         </ul>
       )}
-
       <h2>SẢN PHẨM NỔI BẬT</h2>
       <input
         className="admin-product-manager-input"
@@ -223,13 +276,9 @@ const AdminProductManager = () => {
             <h2 className="admin-product-manager-item-title">{product.Name}</h2>
             <p className="admin-product-manager-item-description">{product.description}</p>
             <p className="admin-product-manager-item-price">Giá: {product.price} VND</p>
-            <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} width="100" />
-            <button className="admin-product-manager-item-edit" onClick={() => handleEdit(product)}>
-              Sửa
-            </button>
-            <button className="admin-product-manager-item-delete" onClick={() => handleDelete(product._id)}>
-              Xóa
-            </button>
+            <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} />
+            <button className="admin-product-manager-button" onClick={() => handleEdit(product)}>Chỉnh sửa</button>
+            <button className="admin-product-manager-button" onClick={() => handleDelete(product._id)}>Xóa</button>
           </li>
         ))}
       </ul>

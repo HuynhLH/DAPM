@@ -9,19 +9,18 @@ import Profile from './components/Profile/Profile';
 import Support from './components/Support/Support';
 import HeaderFooterlayout from './HeaderFooterlayout';
 import { useSelector } from 'react-redux';
-import UserCart from './components/UserCart/UserCart';
 import Dashboard from './admincompoments/DashboadAdmin/Dashboard';
 import DealsPage from './components/Hasakideals/DealsPage';
 import HotDeals from './components/HotDeals/HotDeals';
 import ProductPage from './components/ProductPage/ProductPage';
-import RecentlyViewedPage from './components/RecentlyViewedPage/RecentlyViewedPage';
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import Cart from './components/Cart/Cart';
 
 
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
-const stripePromise = loadStripe('your_stripe_public_key'); // Thay bằng public key từ Stripe
+const stripePromise = loadStripe('your_stripe_public_key'); 
 
 function App() {
   const currentUser = useSelector((state) => state.auth.login.currentUser); 
@@ -62,27 +61,13 @@ function App() {
               </HeaderFooterlayout>
             }
           />
-          <Route 
-          path='/recentlyViewe' element={
-            <HeaderFooterlayout>
-              <RecentlyViewedPage/>
-            </HeaderFooterlayout>
-          }
-          />
-          <Route
-            path='/usercart'
+            <Route
+            path='/cart'
             element={
               <HeaderFooterlayout>
-                <UserCart/>
+                <Cart/>
               </HeaderFooterlayout>
             }
-          />
-          <Route path='/products/:id'
-          element={
-           <HeaderFooterlayout>
-            <ProductDetail/>
-           </HeaderFooterlayout>
-          }
           />
           <Route 
             path="/deals" 
@@ -91,6 +76,13 @@ function App() {
                 <DealsPage/>
               </HeaderFooterlayout>
             } 
+          />
+          <Route path='/product/:id'
+          element={
+            <HeaderFooterlayout>
+              <ProductDetail/>
+            </HeaderFooterlayout>
+          }
           />
           <Route
           path='/produtcpage' element={

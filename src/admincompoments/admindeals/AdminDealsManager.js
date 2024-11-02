@@ -8,23 +8,29 @@ import './AdminDealsManager.css';
 const AdminDealsManager = () => {
     const dispatch = useDispatch();
     const { deals, loading, error } = useSelector((state) => state.deals);
-    const [categories, setCategories] = useState([]); // Thêm state cho loại sản phẩm
+    const [categories, setCategories] = useState([]);
     const [newDeal, setNewDeal] = useState({
         name: '',
         description: '',
         price: '',
         image_url: '',
-        category: '', // Thêm trường category
+        category: '',
+        discount: '', 
+        startDate: '', 
+        endDate: '', 
+        brand: '', 
+        colors: '',
+        sizes:'',
     });
     const [editMode, setEditMode] = useState(false);
     const [editDealId, setEditDealId] = useState('');
 
     useEffect(() => {
         dispatch(fetchDeals());
-        fetchCategories(); // Gọi hàm lấy loại sản phẩm
+        fetchCategories();
     }, [dispatch]);
 
-    const fetchCategories = async () => { // Hàm lấy loại sản phẩm
+    const fetchCategories = async () => {
         try {
             const response = await axios.get('http://localhost:5000/api/categories/get');
             setCategories(response.data);
@@ -50,7 +56,7 @@ const AdminDealsManager = () => {
         } catch (error) {
             console.error('Error saving deal:', error);
         }
-    };    
+    };
 
     const handleEdit = (deal) => {
         setNewDeal(deal);
@@ -65,9 +71,30 @@ const AdminDealsManager = () => {
             console.error('Error deleting deal:', error);
         }
     };
+    const handleChange1 = (e) => {
+        const { name, value, type, checked } = e.target;
+        if (name === 'colors' || name === 'sizes') {
+          const values = Array.from(e.target.selectedOptions, option => option.value);
+          setNewDeal({ ...newDeal, [name]: values });
+        } else {
+          setNewDeal({ ...newDeal, [name]: type === 'checkbox' ? checked : value });
+        }
+      };
 
     const resetForm = () => {
-        setNewDeal({ name: '', description: '', price: '', image_url: '', category: '' }); // Reset category
+        setNewDeal({ 
+            name: '', 
+            description: '', 
+            price: '', 
+            image_url: '', 
+            category: '', 
+            discount: '', 
+            startDate: '', 
+            endDate: '',
+            brand: '' ,
+            sizes:'',
+            colors:'',
+        });
         setEditMode(false);
         setEditDealId('');
     };
@@ -133,6 +160,36 @@ const AdminDealsManager = () => {
                     onChange={handleChange} 
                     required 
                 />
+                <input 
+                    className="admin-deal-input" 
+                    name="brand" 
+                    placeholder="Thương hiệu" 
+                    value={newDeal.brand} 
+                    onChange={handleChange} 
+                />
+                <select
+                className="admin-product-manager-input"
+                name="colors"
+                multiple
+                value={newDeal.colors}
+                onChange={handleChange1}
+                >
+                <option value="red">Đỏ</option>
+                <option value="blue">Xanh dương</option>
+                <option value="green">Xanh lá</option>
+                </select>
+                <select
+                className="admin-product-manager-input"
+                name="sizes"
+                multiple
+                value={newDeal.sizes}
+                onChange={handleChange1}
+                >
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                </select>
                 <select 
                     className="admin-deal-input" 
                     name="category" 
@@ -146,14 +203,14 @@ const AdminDealsManager = () => {
                     ))}
                 </select>
                 <label>
-                <input 
-                    type="checkbox" 
-                    name="isActive" 
-                    checked={newDeal.isActive} 
-                    onChange={(e) => setNewDeal({ ...newDeal, isActive: e.target.checked })} 
-                />
-                Hoạt động
-            </label>
+                    <input 
+                        type="checkbox" 
+                        name="isActive" 
+                        checked={newDeal.isActive} 
+                        onChange={(e) => setNewDeal({ ...newDeal, isActive: e.target.checked })} 
+                    />
+                    Hoạt động
+                </label>
                 <button className="admin-deal-button" type="submit" disabled={loading}>
                     {editMode ? 'Cập nhật' : 'Thêm'}
                 </button>
@@ -169,20 +226,18 @@ const AdminDealsManager = () => {
                 <p>Đang tải...</p>
             ) : (
                 <ul className="admin-deals-list">
-    {deals.map(deal => (
-        <li className="admin-deal-item" key={deal._id}>
-            <h3 className="admin-deal-name">{deal.name}</h3>
-            <p className="admin-deal-description">{deal.description}</p>
-            <p className="admin-deal-price">Giá: {deal.price} ₫</p>
-            <p className="admin-deal-discount">Giảm giá: {deal.discount || 0} %</p> {/* Hiển thị giảm giá */}
-            <p className="admin-deal-dates">Thời gian: {deal.startDate} đến {deal.endDate}</p> {/* Hiển thị thời gian */}
-            <p className="admin-deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p> {/* Hiển thị tình trạng */}
-            <button onClick={() => handleEdit(deal)} className="admin-deal-edit-button">Sửa</button>
-            <button onClick={() => handleDelete(deal._id)} className="admin-deal-delete-button">Xóa</button>
-        </li>
-    ))}
-</ul>
-
+                    {deals.map(deal => (
+                        <li className="admin-deal-item" key={deal._id}>
+                            <h3 className="admin-deal-name">{deal.name}</h3>
+                            <p className="admin-deal-price">Giá: {deal.price} ₫</p>
+                            <p className="admin-deal-discount">Giảm giá: {deal.discount || 0} %</p>
+                            <p className="admin-deal-dates">Thời gian: {deal.startDate} đến {deal.endDate}</p>
+                            <p className="admin-deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
+                            <button onClick={() => handleEdit(deal)} className="admin-deal-edit-button">Sửa</button>
+                            <button onClick={() => handleDelete(deal._id)} className="admin-deal-delete-button">Xóa</button>
+                        </li>
+                    ))}
+                </ul>
             )}
             {error && <p className="error-message">{error}</p>} 
         </div>

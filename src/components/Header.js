@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Navbar.css'; 
 import { logOut } from '../redux/apiRequest';
@@ -13,6 +13,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
+    const [searchTerm, setSearchTerm] = useState(''); 
     const accessToken = user?.accessToken;
     const id = user?._id;
     let axiosJWT = createAxios(user, dispatch, logOutSuccess);
@@ -32,6 +33,15 @@ const Header = () => {
         }
     };
 
+    // Handle search submission
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (searchTerm) {
+            navigate(`/produtcpage?search=${searchTerm}`); 
+            setSearchTerm(''); 
+        }
+    };
+
     useEffect(() => {
         showButton();
         window.addEventListener('resize', showButton);
@@ -48,11 +58,17 @@ const Header = () => {
                     HASAKI.vn <i className="fas fa-leaf"></i>
                 </Link>
                 <div className="navbar-search">
-                    <input type="text" placeholder="Tìm kiếm sản phẩm..." />
-                    <i className="fas fa-search search-icon"></i>
+                    <form onSubmit={handleSearchSubmit}>
+                        <input 
+                            type="text" 
+                            placeholder="Tìm kiếm sản phẩm..." 
+                            value={searchTerm} 
+                            onChange={(e) => setSearchTerm(e.target.value)} 
+                        />
+                    </form>
                 </div>
                 <Link to='/profile' className='nav-link'> 
-                <i className='fas fa-user'></i>{user ? user.username : 'Tài khoản'}
+                    <i className='fas fa-user'></i>{user ? user.username : 'Tài khoản'}
                 </Link>
                 <Link to='/support' className='nav-link'>
                     <i className='fas fa-phone-alt'></i> Hỗ trợ
@@ -66,7 +82,7 @@ const Header = () => {
                         <i className='fas fa-user-circle'></i> Sign In
                     </Link>
                 )}
-                <Link to='/usercart' className='nav-link'>
+                <Link to='/cart' className='nav-link'>
                     <i className='fas fa-shopping-cart'></i> Giỏ hàng
                 </Link>
             </div>
@@ -109,4 +125,4 @@ const Header = () => {
     );
 };
 
-export default Header; 
+export default Header;

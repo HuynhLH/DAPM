@@ -35,15 +35,12 @@
     margin: 10px 0;
 }
 
-.deal-description {
-    font-size: 0.9em;
-    color: #666;
-}
+
 
 .deal-price {
-    font-size: 1.1em;
+    font-size: 1.5em;
     color: red;
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .deal-button {
@@ -58,4 +55,43 @@
 
 .deal-button:hover {
     background-color: #d98030;
+}
+
+.search-bar {
+    display: flex;
+    margin-bottom: 20px; 
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin-right: 10px; 
+}
+
+.search-button {
+    padding: 10px 15px; 
+    background-color: #007BFF;
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s; 
+}
+
+.search-button:hover {
+    background-color: #0056b3; 
+}
+
+.price-input {
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    margin: 0 5px; 
+}
+
+.sort-select {
+    padding: 10px; 
+    margin: 0 5px; 
 }

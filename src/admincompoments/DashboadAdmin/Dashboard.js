@@ -6,7 +6,6 @@ import AdminProductManager from '../AdminProductManager';
 import AdminDealsManager from '../admindeals/AdminDealsManager';
 import UserList from '../adminuserlist/UserList';
 import CategoryPage from '../admincaterogy/CategoryPage';
-import Cart from '../adminCart/AdminCartManager';
 import './Dashboard.css';
 import { logOut } from '../../redux/apiRequest';
 import { createAxios } from '../../createInstance';
@@ -38,12 +37,8 @@ const Dashboard = () => {
                 return <AdminDealsManager />;
             case 'userlist':
                 return <UserList/>;
-            case 'cart':
-                return <Cart/>;
             case 'category':
                 return <CategoryPage />;
-            case 'customer':
-                return <Card title="Tổng số khách hàng" content={<p className="admin-customer-count">300</p>} />;
             default:
                 return null;
         }
@@ -74,7 +69,6 @@ const Dashboard = () => {
                         <li onClick={() => setSelectedCategory('userlist')}>Tài khoản User</li>
                         <li onClick={() => setSelectedCategory('category')}>Loại hàng</li>
                         <li onClick={() => setSelectedCategory('cart')}>Giỏ hàng</li>
-                        <li onClick={() => setSelectedCategory('customer')}>Khách Hàng</li>
                     </ul>
                 </nav>
                 <div className="admin-dashboard-content">

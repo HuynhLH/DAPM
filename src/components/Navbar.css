@@ -28,15 +28,15 @@
 
 .navbar-search {
     position: relative;
-    width: 30%; /* Điều chỉnh lại chiều rộng */
+    width: 30%;
 }
 
 .navbar-search input {
     width: 100%;
     padding: 10px;
-    padding-left: 40px; /* Giữ khoảng trống cho icon tìm kiếm */
+    padding-left: 40px; 
     border: none;
-    border-radius: 25px; /* Bo tròn khung tìm kiếm */
+    border-radius: 25px; 
 }
 
 .search-icon {

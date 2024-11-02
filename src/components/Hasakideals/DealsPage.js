@@ -1,62 +1,128 @@
+// src/usercomponents/DealsPage.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../redux/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchDeals } from '../../redux/dealSlice';
+import { useNavigate } from 'react-router-dom';
+import { addToCart } from '../../redux/cartSlice';
+
 import './DealsPage.css';
 
 const DealsPage = () => {
-    const [deals, setDeals] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const dispatch = useDispatch(); 
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
+    const [searchTerm, setSearchTerm] = useState(''); 
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    const { deals, loading, error } = useSelector((state) => state.deals);
+    const currentUser = useSelector(state => state.auth.login.currentUser);
+
 
     useEffect(() => {
-        const fetchDeals = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/deals');
-                setDeals(response.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchDeals();
-    }, []);
+        dispatch(fetchDeals());
+    }, [dispatch]);
 
     const handleAddToCart = (deal) => {
-        dispatch(addProduct(deal)); 
+        if (currentUser) {
+            dispatch(addToCart(deal));
+            alert(`${deal.name} đã được thêm vào giỏ hàng!`);
+        } else {
+            alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
+        }
     };
 
-    if (loading) {
-        return <p>Đang tải sản phẩm...</p>;
-    }
+    const filteredDeals = deals.filter(deal => {
+        const price = parseFloat(deal.price) || 0;
+        const min = parseFloat(minPrice);
+        const max = parseFloat(maxPrice);
+        const matchesSearchTerm = deal.name.toLowerCase().includes(searchTerm.toLowerCase()); 
+        return (isNaN(min) || price >= min) && (isNaN(max) || price <= max) && matchesSearchTerm; 
+    });
+    
+    const sortedDeals = filteredDeals.sort((a, b) => {
+        if (sortOrder === 'lowToHigh') return (a.price || 0) - (b.price || 0);
+        if (sortOrder === 'highToLow') return (b.price || 0) - (a.price || 0);
+        if (sortOrder === 'bestSeller') return (b.sales || 0) - (a.sales || 0);
+        return 0;
+    });
 
-    if (error) {
-        return <p>Lỗi: {error}</p>;
-    }
+    const handleSortChange = (e) => setSortOrder(e.target.value);
+
+    if (loading) return <p>Đang tải sản phẩm...</p>;
+    if (error) return <p>Lỗi: {error}</p>;
+
+    const handleDealClick = (deal) => {
+        navigate(`/product/${deal._id}`, { state: { productData: deal } });
+    };
 
     return (
         <div className="deals-page">
             <h1>Các sản phẩm</h1>
-            <div className="deals-container">
-                {deals.map(deal => (
-                    <div className="deal-card" key={deal._id}>
-                        <img src={deal.image_url} alt={deal.name} className="deal-image" />
-                        <h3 className="deal-name">{deal.name}</h3>
-                        <p className="deal-description">{deal.description}</p>
-                        <p className="deal-price">{deal.price} ₫</p>
-                        <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p> 
-                        <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p> {/* Hiển thị tình trạng */}
-                        <button 
+            <div className="product-page">
+                {/* Search Bar */}
+                <div className="search-bar">
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Tìm kiếm sản phẩm..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
+                    <button className="search-button" onClick={() => {  }}>
+                        Tìm
+                    </button>
+                </div>
+
+                {/* Price Filter */}
+                <div className="price-filter">
+                    <input
+                        type="number"
+                        placeholder="Giá thấp"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                    />
+                    <input
+                        type="number"
+                        placeholder="Giá cao"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                    />
+                </div>
+
+                {/* Sort Options */}
+                <div className="sort-options">
+                    <label>Sắp xếp theo:</label>
+                    <select value={sortOrder} onChange={handleSortChange}>
+                        <option value="">Mặc định</option>
+                        <option value="lowToHigh">Giá thấp đến cao</option>
+                        <option value="highToLow">Giá cao đến thấp</option>
+                        <option value="bestSeller">Bán chạy nhất</option>
+                    </select>
+                </div>
+
+                {/* Deals Container */}
+                <div className="deals-container">
+                    {sortedDeals.map(deal => (
+                        <div className="deal-card" key={deal._id} onClick={() => handleDealClick(deal)}>
+                            <img src={deal.image_url} alt={deal.name} className="deal-image" />
+                            <h3 className="deal-name">{deal.name}</h3>
+                            <p className="deal-price">{deal.price} ₫</p>
+                            <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
+                            <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
+                            <button 
                             className="deal-button" 
-                            onClick={() => handleAddToCart(deal)} 
+                            onClick={(e) => {
+                                e.stopPropagation(); 
+                                handleAddToCart(deal); 
+                            }}
                         >
                             Thêm vào giỏ hàng
                         </button>
-                    </div>
-                ))}
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

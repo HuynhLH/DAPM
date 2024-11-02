@@ -4,8 +4,11 @@ import productReducer from "./productSlice";
 import userReducer from "./userSlice";
 import categoryReducer from "./categorySlice";
 import dealReducer from "./dealSlice";
-import cartReducer from "./cartSlice";
 import recentlyViewedReducer from "./recentlyViewedSlice"; 
+import cartReducer from './cartSlice';
+
+
+
 export default configureStore({
     reducer: {
         auth: authReducer,
@@ -13,7 +16,7 @@ export default configureStore({
         users: userReducer,
         categories: categoryReducer,
         deals: dealReducer,
-        carts: cartReducer,
         recentlyViewed: recentlyViewedReducer,
+        cart: cartReducer,
     },
 });

@@ -1,6 +1,6 @@
 const Deal = require('../models/Deal');
 
-// Create a new deal
+// tạo deal ấy
 exports.createDeal = async (req, res) => {
     try {
         const deal = new Deal(req.body);
@@ -11,7 +11,7 @@ exports.createDeal = async (req, res) => {
     }
 };
 
-// Get all deals
+// nhận taatst cả deal
 exports.getAllDeals = async (req, res) => {
     try {
         const deals = await Deal.find().populate('category');
@@ -34,7 +34,7 @@ exports.getDealById = async (req, res) => {
     }
 };
 
-// Update a deal
+// cập nhất deal
 exports.updateDeal = async (req, res) => {
     try {
         const deal = await Deal.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -47,7 +47,7 @@ exports.updateDeal = async (req, res) => {
     }
 };
 
-// Delete a deal
+// xóa deal ấy
 exports.deleteDeal = async (req, res) => {
     try {
         const deal = await Deal.findByIdAndDelete(req.params.id);

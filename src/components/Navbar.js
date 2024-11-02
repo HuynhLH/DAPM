@@ -3,17 +3,19 @@ import './Navbar.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/productSlice';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const dispatch = useDispatch();
     const products = useSelector(state => state.products.products);
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(fetchProducts()); 
     }, [dispatch]);
-
-    // Filter for featured products
+    const handleProductClick = (product) => {
+        navigate(`/product/${product._id}`, { state: { productData: product } });
+    };
     const featuredProducts = products.filter(product => product.isFeatured);
 
     return (
@@ -54,7 +56,7 @@ const Navbar = () => {
                     <div className="products-grid">
                         {featuredProducts.length > 0 ? (
                             featuredProducts.map((product) => (
-                                <div className="product-card" key={product._id}>
+                                <div className="product-card" key={product._id} onClick={() => handleProductClick(product)}>
                                     <img src={product.image_url} alt={product.Name} className="product-image" />
                                     <div className="product-info">
                                         <h3 className="product-name">{product.Name}</h3>

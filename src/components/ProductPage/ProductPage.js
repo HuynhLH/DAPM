@@ -1,39 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchProducts } from '../../redux/productSlice'; 
 import './ProductPage.css';
-import { useNavigate } from 'react-router-dom';
+import { addToCart } from '../../redux/cartSlice';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const ProductPage = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const currentUser = useSelector(state => state.auth.login.currentUser);
+    const { products, status, error } = useSelector((state) => state.products);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
-    const [sortOrder, setSortOrder] = useState(''); 
-    const navigate = useNavigate();
+    const [sortOrder, setSortOrder] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/products/get');
-                console.log(response.data); 
-                setProducts(response.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+        const queryParams = new URLSearchParams(location.search);
+        const searchQuery = queryParams.get('search');
+        if (searchQuery) {
+            setSearchTerm(searchQuery);
+        }
+    }, [location.search]);
 
-        fetchProducts();
-    }, []);
-
+    useEffect(() => {
+        if (status === 'idle') {
+            dispatch(fetchProducts());
+        }
+    }, [status, dispatch]);
+    const handleAddToCart = (product) => {
+      if (currentUser) {
+          dispatch(addToCart(product));
+          alert(`${product.name} đã được thêm vào giỏ hàng!`);
+      } else {
+          alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
+      }
+  };
+    
     const filteredProducts = products.filter(product => {
         const price = parseFloat(product.price);
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
         const withinPriceRange = (isNaN(min) || price >= min) && (isNaN(max) || price <= max);
-        return withinPriceRange;
+        const matchesSearchTerm = product.Name.toLowerCase().includes(searchTerm.toLowerCase());
+        return withinPriceRange && matchesSearchTerm;
     });
 
     const sortedProducts = filteredProducts.sort((a, b) => {
@@ -51,34 +64,50 @@ const ProductPage = () => {
         setSortOrder(e.target.value);
     };
 
-    const handleProductClick = (id) => {
-        navigate(`/product/${id}`);
+    const handleProductClick = (product) => {
+        navigate(`/product/${product._id}`, { state: { productData: product } });
     };
+    
 
     return (
         <div className="product-page">
             <h1 className="product-page-title">Sản phẩm nổi bật</h1>
-            {loading && <p className="loading-message">Đang tải sản phẩm...</p>}
+            {status === 'loading' && <p className="loading-message">Đang tải sản phẩm...</p>}
             {error && <p className="error-message">Lỗi: {error}</p>}
+
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Tìm kiếm sản phẩm..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="search-input"
+                />
+                <button className="search-button" onClick={() => navigate(`/productpage?search=${searchTerm}`)}>
+                    Tìm
+                </button>
+            </div>
+            
             <div className="price-filter">
                 <input
                     type="number"
                     placeholder="Giá thấp"
                     value={minPrice}
                     onChange={(e) => setMinPrice(e.target.value)}
+                    className="price-input"
                 />
                 <input
                     type="number"
                     placeholder="Giá cao"
                     value={maxPrice}
                     onChange={(e) => setMaxPrice(e.target.value)}
+                    className="price-input"
                 />
             </div>
 
-            {/* Sắp xếp sản phẩm */}
             <div className="sort-options">
                 <label>Sắp xếp theo:</label>
-                <select value={sortOrder} onChange={handleSortChange}>
+                <select value={sortOrder} onChange={handleSortChange} className="sort-select">
                     <option value="">Mặc định</option>
                     <option value="lowToHigh">Giá thấp đến cao</option>
                     <option value="highToLow">Giá cao đến thấp</option>
@@ -88,12 +117,14 @@ const ProductPage = () => {
 
             <div className="product-grid">
                 {sortedProducts.map((product) => (
-                    <div className="product-card" key={product._id} onClick={() => handleProductClick(product._id)}>
+                    <div className="product-card" key={product._id} onClick={() => handleProductClick(product)}>
                         <img src={product.image_url} alt={product.Name} className="product-image" />
                         <h2 className="product-name">{product.Name}</h2>
-                        <p className="product-description">{product.description}</p>
                         <p className="product-price">{product.price} ₫</p>
-                        <button className="add-to-cart-button">Thêm vào giỏ hàng</button>
+                        <button className="add-to-cart-button1"onClick={(e) => {
+                                e.stopPropagation(); 
+                                handleAddToCart(product); 
+                            }}>Thêm vào giỏ hàng</button>
                     </div>
                 ))}
             </div>

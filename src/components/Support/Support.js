@@ -1,12 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate từ react-router-dom
+import { useNavigate } from 'react-router-dom';
 import './Support.css'; 
 
 const Support = () => {
-    const navigate = useNavigate(); // Khởi tạo hàm navigate
+    const navigate = useNavigate(); 
 
     const handleBack = () => {
-        navigate(-1); // Quay về trang trước đó
+        navigate(-1); // Quay về trang trước đó nha
     };
 
     return (
@@ -46,7 +46,7 @@ const Support = () => {
                 <img src={`${process.env.PUBLIC_URL}/images/HINH1.jpg`} alt="Hình ảnh hỗ trợ" className="support-image" />
             </section>
 
-            {/* Nút Quay về */}
+            
             <button className="back-button" onClick={handleBack}>
                 Quay về
             </button>

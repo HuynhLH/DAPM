@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from './components/Header';
-import FlashDeals from './components/FlashDeals';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import RecentlyViewed from './components/recentlyViewed/recentlyViewed';
 
 const MainLayout = ({ children }) => {
   return (
     <div>
       <Header />
-      <FlashDeals />
       <Navbar />
+      <RecentlyViewed /> 
       <div>{children}</div>
       <Footer />
     </div>
