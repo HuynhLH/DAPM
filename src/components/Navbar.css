@@ -380,3 +380,113 @@
     font-size: 0.9rem;
     font-weight: bold;
 }
+.nav-link {
+    position: relative;
+}
+
+.cart-item-count {
+    position: absolute;
+    top: -5px; 
+    right: -10px;
+    background-color: red; 
+    color: white; 
+    border-radius: 50%; 
+    padding: 5px 10px; 
+    font-size: 12px; 
+}
+.promotions {
+    max-width: 1500px;
+    margin: 0 auto;
+    padding: 20px 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.promotion-slide {
+    position: relative;
+}
+
+.promotion-slide img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.promotion-slide img:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+.slick-list {
+    overflow: hidden;  
+}
+.slick-slide {
+    display: flex;     
+    justify-content: center;
+    align-items: center;
+}
+.slick-dots {
+    bottom: 15px;
+    text-align: center;
+}
+
+.slick-dots li {
+    margin: 0 5px;
+}
+
+.slick-dots li button:before {
+    font-size: 14px;
+    color: rgba(0, 123, 255, 0.5);
+    transition: color 0.3s ease;
+}
+
+.slick-dots li.slick-active button:before {
+    color: #007bff;
+}
+
+.slick-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-track {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slick-prev, .slick-next {
+    font-size: 24px;
+    color: #007bff;
+    z-index: 1;
+    transition: background 0.3s ease, transform 0.3s ease;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slick-prev:hover, .slick-next:hover {
+    background: rgba(0, 123, 255, 0.1);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.slick-prev:before, .slick-next:before {
+    font-family: 'FontAwesome';
+    color: #007bff;
+}
+
+.slick-prev:before {
+    content: '\f104';
+}
+
+.slick-next:before {
+    content: '\f105';
+}

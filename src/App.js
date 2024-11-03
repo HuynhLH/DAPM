@@ -14,7 +14,10 @@ import DealsPage from './components/Hasakideals/DealsPage';
 import HotDeals from './components/HotDeals/HotDeals';
 import ProductPage from './components/ProductPage/ProductPage';
 import ProductDetail from './components/ProductDetail/ProductDetail';
+import RecentlyViewedPage from './components/RecentlyViewedPage/RecentlyViewedPage';
 import Cart from './components/Cart/Cart';
+import CheckoutPage from './components/CheckoutPage/CheckoutPage';
+import Guide from './components/Guide/Guide';
 
 
 import { Elements } from '@stripe/react-stripe-js';
@@ -54,6 +57,22 @@ function App() {
             }
           />
           <Route
+            path="/recentlyviewpage"
+            element={
+              <HeaderFooterlayout>
+                <RecentlyViewedPage />
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path="/CheckoutPage"
+            element={
+              <HeaderFooterlayout>
+                <CheckoutPage />
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
             path='/hotdeals'
             element={
               <HeaderFooterlayout>
@@ -66,6 +85,14 @@ function App() {
             element={
               <HeaderFooterlayout>
                 <Cart/>
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path='/guide'
+            element={
+              <HeaderFooterlayout>
+                <Guide/>
               </HeaderFooterlayout>
             }
           />

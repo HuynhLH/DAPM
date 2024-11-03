@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchProducts } from '../../redux/productSlice'; 
+import { fetchCategories } from '../../redux/categorySlice'; 
 import './ProductPage.css';
 import { addToCart } from '../../redux/cartSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -12,11 +13,12 @@ const ProductPage = () => {
 
     const currentUser = useSelector(state => state.auth.login.currentUser);
     const { products, status, error } = useSelector((state) => state.products);
+    const { categories } = useSelector(state => state.categories);
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [selectedCategory, setSelectedCategory] = useState(''); 
 
     useEffect(() => {
         const queryParams = new URLSearchParams(location.search);
@@ -29,8 +31,10 @@ const ProductPage = () => {
     useEffect(() => {
         if (status === 'idle') {
             dispatch(fetchProducts());
+            dispatch(fetchCategories()); 
         }
     }, [status, dispatch]);
+
     const handleAddToCart = (product) => {
       if (currentUser) {
           dispatch(addToCart(product));
@@ -38,7 +42,7 @@ const ProductPage = () => {
       } else {
           alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
       }
-  };
+    };
     
     const filteredProducts = products.filter(product => {
         const price = parseFloat(product.price);
@@ -46,7 +50,8 @@ const ProductPage = () => {
         const max = parseFloat(maxPrice);
         const withinPriceRange = (isNaN(min) || price >= min) && (isNaN(max) || price <= max);
         const matchesSearchTerm = product.Name.toLowerCase().includes(searchTerm.toLowerCase());
-        return withinPriceRange && matchesSearchTerm;
+        const matchesCategory = selectedCategory ? product.category_id === selectedCategory : true; 
+        return withinPriceRange && matchesSearchTerm && matchesCategory;
     });
 
     const sortedProducts = filteredProducts.sort((a, b) => {
@@ -64,10 +69,13 @@ const ProductPage = () => {
         setSortOrder(e.target.value);
     };
 
+    const handleCategoryChange = (e) => {
+        setSelectedCategory(e.target.value); 
+    };
+
     const handleProductClick = (product) => {
         navigate(`/product/${product._id}`, { state: { productData: product } });
     };
-    
 
     return (
         <div className="product-page">
@@ -87,7 +95,17 @@ const ProductPage = () => {
                     Tìm
                 </button>
             </div>
-            
+
+            <div className="category-filter">
+                <label>Chọn thể loại:</label>
+                <select value={selectedCategory} onChange={handleCategoryChange} className="category-select">
+                    <option value="">Tất cả</option>
+                    {categories.map(category => (
+                        <option key={category._id} value={category._id}>{category.name}</option>
+                    ))}
+                </select>
+            </div>
+
             <div className="price-filter">
                 <input
                     type="number"
@@ -121,10 +139,10 @@ const ProductPage = () => {
                         <img src={product.image_url} alt={product.Name} className="product-image" />
                         <h2 className="product-name">{product.Name}</h2>
                         <p className="product-price">{product.price} ₫</p>
-                        <button className="add-to-cart-button1"onClick={(e) => {
-                                e.stopPropagation(); 
-                                handleAddToCart(product); 
-                            }}>Thêm vào giỏ hàng</button>
+                        <button className="add-to-cart-button1" onClick={(e) => {
+                            e.stopPropagation(); 
+                            handleAddToCart(product); 
+                        }}>Thêm vào giỏ hàng</button>
                     </div>
                 ))}
             </div>

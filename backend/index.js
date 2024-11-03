@@ -8,7 +8,6 @@ const cookieParser = require('cookie-parser');
 const productRoutes = require('./routes/productRoutes');
 const dealsRoutes = require('./routes/dealRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
-const recentlyViewed = require('./routes/RecentlyViewedRoutes');
 
 dotenv.config();
 const app = express();
@@ -25,7 +24,6 @@ app.use("/v1/user", userRoute);
 app.use("/api/products", productRoutes);
 app.use("/api/deals", dealsRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/recentlyviewed", recentlyViewed);
 
 // Khởi chạy server
 const PORT = 5000;

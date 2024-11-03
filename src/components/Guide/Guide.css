@@ -1,0 +1,73 @@
+/* src/components/Guide.css */
+.guide {
+    font-family: 'Arial', sans-serif;
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+}
+
+h2 {
+    border-bottom: 2px solid #4CAF50;
+    padding-bottom: 10px;
+}
+
+.video-section,
+.advertisements,
+.tips-section,
+.category-section {
+    margin: 20px 0;
+}
+
+.video-container {
+    margin-bottom: 20px;
+}
+
+.ad-banner {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.ad-banner img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.tips-section ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.tips-section ul li {
+    background: #e7f3fe;
+    border-left: 6px solid #2196F3;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.category-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-list li {
+    margin: 5px 0;
+}
+
+.product-guide {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';  
 import './Login.css';
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from '../../redux/cartSlice'; 
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -10,21 +11,37 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
-    // Lấy thông tin lỗi từ Redux
+  // Lấy thông tin lỗi từ Redux
   const error = useSelector((state) => state.auth.login.error); 
 
   const handleLogin = async (e) => {
-      e.preventDefault();
-      const newUser = {
-          username: username,
-          password: password,
-      };  
-      try {
-          await loginUser(newUser, dispatch, navigate);  
-      } catch (err) {
-          console.error("Login failed:", err); 
-      }
-  };
+    e.preventDefault();
+    const newUser = {
+        username: username,
+        password: password,
+    };
+
+    try {
+        await loginUser(newUser, dispatch, navigate); 
+        
+        const storedCartKey = `cart_${username}`; 
+        const storedCartAfterLogin = localStorage.getItem(storedCartKey);
+        
+        console.log('Stored Cart after login:', storedCartAfterLogin);
+
+        if (storedCartAfterLogin) {
+            const cartItems = JSON.parse(storedCartAfterLogin); 
+            cartItems.forEach(item => {
+                dispatch(addToCart(item)); 
+            });
+        }
+    } catch (err) {
+        console.error("Login failed:", err); 
+    }
+};
+
+
+
 
   const goBack = () => {
       navigate("/"); 

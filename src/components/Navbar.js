@@ -1,9 +1,11 @@
+// src/components/Navbar.js
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Navbar.css';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/productSlice';
 import { Link, useNavigate } from 'react-router-dom';
+import Slider from 'react-slick'; 
 
 const Navbar = () => {
     const dispatch = useDispatch();
@@ -13,15 +15,42 @@ const Navbar = () => {
     useEffect(() => {
         dispatch(fetchProducts()); 
     }, [dispatch]);
+
     const handleProductClick = (product) => {
         navigate(`/product/${product._id}`, { state: { productData: product } });
     };
+    
     const featuredProducts = products.filter(product => product.isFeatured);
+
+    const sliderSettings = {
+        dots: false, // Disable dots for slide indicators
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 3000,
+        pauseOnHover: false, // Prevent pausing on hover
+        arrows: false // Hide navigation arrows if you don't need them
+    };
+    
 
     return (
         <div className="navbar">
             <div className="promotions">
                 <h2>Khuyến mãi đặc biệt</h2>
+                <Slider {...sliderSettings}>
+                    <div className="promotion-slide">
+                        <img src="https://media.hcdn.vn/hsk/1730345822homecn225226.jpg" alt="Quảng cáo 1" />
+                    </div>
+                    <div className="promotion-slide">
+                        <img src="https://media.hcdn.vn/hsk/1730445579home-1111.png" alt="Quảng cáo 2" />
+                    </div>
+                    <div className="promotion-slide">
+                        <img src="https://media.hcdn.vn/hsk/1712203188846x250-banner-home-web.jpg" alt="Quảng cáo 3" />
+                    </div>
+                </Slider>
+
                 <div className="promotion-container">
                     <div className="promotion-card">
                         <i className="fas fa-star"></i>
@@ -39,18 +68,19 @@ const Navbar = () => {
                         <i className="fas fa-gift"></i>
                         <h3>Mua là có quà</h3>
                     </div>
-                    <div className="promotion-card">
-                        <i className="fas fa-book"></i>
-                        <h3>Cẩm nang</h3>
-                    </div>
-                    <Link to="/recentlyViewe">
-                    <div className="promotion-card">
-                        <i className="fas fa-eye"></i>
-                        <h3>Đã xem</h3>
-                    </div>
+                    <Link to="/guide">
+                        <div className="promotion-card">
+                            <i className="fas fa-book"></i>
+                            <h3>Cẩm nang</h3>
+                        </div>
+                    </Link>
+                    <Link to="/recentlyviewpage">
+                        <div className="promotion-card">
+                            <i className="fas fa-eye"></i>
+                            <h3>Đã xem</h3>
+                        </div>
                     </Link>
                 </div>
-
                 <div className="products-container">
                     <h2>Sản phẩm nổi bật</h2>
                     <div className="products-grid">

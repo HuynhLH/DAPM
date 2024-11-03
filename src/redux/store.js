@@ -4,8 +4,8 @@ import productReducer from "./productSlice";
 import userReducer from "./userSlice";
 import categoryReducer from "./categorySlice";
 import dealReducer from "./dealSlice";
-import recentlyViewedReducer from "./recentlyViewedSlice"; 
 import cartReducer from './cartSlice';
+import viewedProductsReducer from './viewedProductsSlice';
 
 
 
@@ -16,7 +16,7 @@ export default configureStore({
         users: userReducer,
         categories: categoryReducer,
         deals: dealReducer,
-        recentlyViewed: recentlyViewedReducer,
         cart: cartReducer,
+        viewedProducts: viewedProductsReducer,
     },
 });

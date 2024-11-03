@@ -1,13 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, clearCart } from '../../redux/cartSlice';
-import './Cart.css'; // Đừng quên import CSS
+import { removeFromCart, clearCart, loadCart } from '../../redux/cartSlice';
+import { Link } from 'react-router-dom';
+import './Cart.css';
 
 const Cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
     const total = useSelector(state => state.cart.total);
-    const isAuthenticated = useSelector(state => state.auth.login.currentUser);
+    const loadCartFromLocalStorage = () => {
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : []; 
+    };
+
+    useEffect(() => {
+        const storedCart = loadCartFromLocalStorage();
+        dispatch(loadCart(storedCart)); 
+    }, [dispatch]);
 
     const handleRemove = (item) => {
         dispatch(removeFromCart(item));
@@ -38,6 +47,9 @@ const Cart = () => {
                     </ul>
                     <h3 className="total-price">Tổng tiền: {total} VND</h3>
                     <button className="clear-cart-button" onClick={handleClear}>Xóa toàn bộ</button>
+                    <Link to="/CheckoutPage">
+                        <button className="checkout-button">Thanh Toán</button> 
+                    </Link>
                 </>
             )}
         </div>

@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4; /* Màu nền sáng */
 }
 
 /* Hộp đăng nhập */
@@ -19,12 +18,12 @@
 
 .login-box h2 {
     margin-bottom: 20px;
-    color: #007bff; /* Màu xanh cho tiêu đề */
+    color: #007bff; 
     font-size: 24px;
     font-weight: bold;
 }
 
-/* Các phần tử nhập liệu */
+
 .input-container {
     margin-bottom: 20px;
     text-align: left;

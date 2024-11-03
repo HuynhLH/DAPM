@@ -1,27 +1,28 @@
-// src/usercomponents/DealsPage.js
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDeals } from '../../redux/dealSlice';
+import { fetchCategories } from '../../redux/categorySlice'; 
 import { useNavigate } from 'react-router-dom';
 import { addToCart } from '../../redux/cartSlice';
-
 import './DealsPage.css';
 
 const DealsPage = () => {
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-    const [searchTerm, setSearchTerm] = useState(''); 
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState(''); 
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     
     const { deals, loading, error } = useSelector((state) => state.deals);
+    const { categories } = useSelector((state) => state.categories); 
     const currentUser = useSelector(state => state.auth.login.currentUser);
-
 
     useEffect(() => {
         dispatch(fetchDeals());
+        dispatch(fetchCategories()); 
     }, [dispatch]);
 
     const handleAddToCart = (deal) => {
@@ -37,8 +38,9 @@ const DealsPage = () => {
         const price = parseFloat(deal.price) || 0;
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
-        const matchesSearchTerm = deal.name.toLowerCase().includes(searchTerm.toLowerCase()); 
-        return (isNaN(min) || price >= min) && (isNaN(max) || price <= max) && matchesSearchTerm; 
+        const matchesSearchTerm = deal.name.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesCategory = selectedCategory ? deal.category._id === selectedCategory : true; // Match category
+        return (isNaN(min) || price >= min) && (isNaN(max) || price <= max) && matchesSearchTerm && matchesCategory;
     });
     
     const sortedDeals = filteredDeals.sort((a, b) => {
@@ -61,7 +63,6 @@ const DealsPage = () => {
         <div className="deals-page">
             <h1>Các sản phẩm</h1>
             <div className="product-page">
-                {/* Search Bar */}
                 <div className="search-bar">
                     <input
                         type="text"
@@ -75,7 +76,15 @@ const DealsPage = () => {
                     </button>
                 </div>
 
-                {/* Price Filter */}
+                <div className="category-filter">
+                    <label>Thể loại:</label>
+                    <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+                        <option value="">Tất cả</option>
+                        {categories.map(category => (
+                            <option key={category._id} value={category._id}>{category.name}</option>
+                        ))}
+                    </select>
+                </div>
                 <div className="price-filter">
                     <input
                         type="number"
@@ -91,7 +100,6 @@ const DealsPage = () => {
                     />
                 </div>
 
-                {/* Sort Options */}
                 <div className="sort-options">
                     <label>Sắp xếp theo:</label>
                     <select value={sortOrder} onChange={handleSortChange}>
@@ -112,14 +120,14 @@ const DealsPage = () => {
                             <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
                             <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
                             <button 
-                            className="deal-button" 
-                            onClick={(e) => {
-                                e.stopPropagation(); 
-                                handleAddToCart(deal); 
-                            }}
-                        >
-                            Thêm vào giỏ hàng
-                        </button>
+                                className="deal-button" 
+                                onClick={(e) => {
+                                    e.stopPropagation(); 
+                                    handleAddToCart(deal); 
+                                }}
+                            >
+                                Thêm vào giỏ hàng
+                            </button>
                         </div>
                     ))}
                 </div>

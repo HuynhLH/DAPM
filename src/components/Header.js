@@ -6,9 +6,11 @@ import './Navbar.css';
 import { logOut } from '../redux/apiRequest';
 import { createAxios } from '../createInstance';
 import { logOutSuccess } from '../redux/authSlice';
+import { clearCart } from '../redux/cartSlice';
 
 const Header = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
+    const cartItems = useSelector((state) => state.cart.items); 
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [click, setClick] = useState(false);
@@ -22,7 +24,8 @@ const Header = () => {
     const closeMobileMenu = () => setClick(false);
 
     const handleLogout = () => {
-        logOut(dispatch, id, navigate, accessToken, axiosJWT);
+        dispatch(clearCart()); 
+        logOut(dispatch, id, navigate, accessToken, axiosJWT); 
     };
 
     const showButton = () => {
@@ -33,7 +36,6 @@ const Header = () => {
         }
     };
 
-    // Handle search submission
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (searchTerm) {
@@ -84,6 +86,9 @@ const Header = () => {
                 )}
                 <Link to='/cart' className='nav-link'>
                     <i className='fas fa-shopping-cart'></i> Giỏ hàng
+                    {cartItems.length > 0 && (
+                        <span className="cart-item-count">{cartItems.length}</span> 
+                    )}
                 </Link>
             </div>
             <div className="navbar-bottom">
