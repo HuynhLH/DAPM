@@ -44,7 +44,7 @@ const ProductDetail = () => {
                     <img src={product.image_url} alt={product.Name} className="product-detail-image" />
                 </div>
                 <div className="product-info">
-                    <h1 className="product-name">{product.Name}</h1>
+                    <h1 className="product-name">{product.Name} {product.name}</h1>
                     <p className="product-price">{product.price} ₫</p>
                     <p className="product-description">{product.description}</p>
 

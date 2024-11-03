@@ -5,7 +5,7 @@ import './Guide.css';
 const Guide = () => {
     return (
         <div className="guide">
-            <h1>Cẩm Nang Thông Minh</h1>
+            <h1 className='kkh'>Cẩm Nang Thông Minh</h1>
             
             {/* Phần Video */}
             <section className="video-section">
@@ -24,7 +24,7 @@ const Guide = () => {
 
             {/* Phần Quảng Cáo */}
             <section className="advertisements">
-                <h2>Quảng Cáo</h2>
+                <h2 className='kkk'>Quảng Cáo</h2>
                 <div className="ad-banner">
                     <img src="https://media.hcdn.vn/hsk/1730457566homedove111.jpg" alt="Quảng cáo 1" />
                     <p>Khám phá sản phẩm A mới nhất của chúng tôi!</p>

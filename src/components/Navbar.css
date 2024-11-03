@@ -232,7 +232,7 @@
         position: relative;
     }
 }
-.promotions1 {
+.promotions {
     background-color: #f8f8f8; 
     padding: 2rem;
     text-align: center;
@@ -348,7 +348,7 @@
     margin-top: 10px;
 }
 
-.product-name {
+.product-name1 {
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;

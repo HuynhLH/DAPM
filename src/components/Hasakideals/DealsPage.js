@@ -61,7 +61,7 @@ const DealsPage = () => {
 
     return (
         <div className="deals-page">
-            <h1>Các sản phẩm</h1>
+            <h1 className='huynh'>Các sản phẩm</h1>
             <div className="product-page">
                 <div className="search-bar">
                     <input

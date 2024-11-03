@@ -1,21 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './Profile.css';
 import { useNavigate } from 'react-router-dom'; 
+import { updateUser } from '../../redux/apiCalls'; 
+import { updateUserSuccess } from '../../redux/userSlice';
 
 const Profile = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
-    const [username, setUsername] = useState(user?.username || '');
-    const [email, setEmail] = useState(user?.email || '');
-    const [isEditable, setIsEditable] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    
+    const accessToken = user?.accessToken;
+
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState(''); 
+    const [isEditable, setIsEditable] = useState(false);
+
+    useEffect(() => {
+        // Lấy thông tin người dùng từ localStorage
+        const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (storedUser) {
+            setUsername(storedUser.username);
+            setEmail(storedUser.email);
+        } else if (user) {
+            setUsername(user.username);
+            setEmail(user.email);
+        }
+    }, [user]);
+
     const handleSaveChanges = (e) => {
         e.preventDefault();
-        alert('Thay đổi đã được lưu!');
-        setIsEditable(false); 
+        const updatedUser = {
+            username,
+            email,
+            ...(password && { password }), 
+        };
+
+        if (accessToken) {
+            updateUser(user._id, updatedUser, dispatch, accessToken)
+                .then(() => {
+                    alert("Thay đổi đã được lưu!");
+                    const newUser = { ...user, ...updatedUser }; // Cập nhật thông tin người dùng
+                    localStorage.setItem('currentUser', JSON.stringify(newUser)); // Lưu vào localStorage
+                    dispatch(updateUserSuccess(newUser)); 
+                    setIsEditable(false);
+                })
+                .catch((error) => {
+                    alert("Lỗi: Không thể lưu thay đổi."); 
+                });
+        } else {
+            alert("Bạn cần đăng nhập để thay đổi thông tin.");
+        }
     };
+
+    
 
     const goBack = () => {
         navigate(-1); 
@@ -75,6 +113,8 @@ const Profile = () => {
                                     type="password" 
                                     id="password" 
                                     placeholder="Nhập mật khẩu mới" 
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)} 
                                     className="password-input"
                                 />
                             </div>

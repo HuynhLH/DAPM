@@ -137,7 +137,7 @@ const ProductPage = () => {
                 {sortedProducts.map((product) => (
                     <div className="product-card" key={product._id} onClick={() => handleProductClick(product)}>
                         <img src={product.image_url} alt={product.Name} className="product-image" />
-                        <h2 className="product-name">{product.Name}</h2>
+                        <h2 className="product-name2">{product.Name}</h2>
                         <p className="product-price">{product.price} ₫</p>
                         <button className="add-to-cart-button1" onClick={(e) => {
                             e.stopPropagation(); 

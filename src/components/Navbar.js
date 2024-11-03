@@ -38,7 +38,7 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="promotions1">
-                <h2>Khuyến mãi đặc biệt</h2>
+                <h2 className='hhhh'>Khuyến mãi đặc biệt</h2>
                 <Slider {...sliderSettings}>
                     <div className="promotion-slide">
                         <img src="https://media.hcdn.vn/hsk/1730345822homecn225226.jpg" alt="Quảng cáo 1" />
@@ -89,7 +89,7 @@ const Navbar = () => {
                                 <div className="product-card" key={product._id} onClick={() => handleProductClick(product)}>
                                     <img src={product.image_url} alt={product.Name} className="product-image" />
                                     <div className="product-info">
-                                        <h3 className="product-name">{product.Name}</h3>
+                                        <h3 className="product-name1">{product.Name}</h3>
                                         <div className="product-pricing">
                                             <span className="product-price">{product.price} ₫</span>
                                         </div>
