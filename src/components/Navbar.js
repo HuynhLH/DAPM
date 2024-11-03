@@ -23,21 +23,21 @@ const Navbar = () => {
     const featuredProducts = products.filter(product => product.isFeatured);
 
     const sliderSettings = {
-        dots: false, // Disable dots for slide indicators
+        dots: false, 
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 3000,
-        pauseOnHover: false, // Prevent pausing on hover
-        arrows: false // Hide navigation arrows if you don't need them
+        pauseOnHover: false, 
+        arrows: false 
     };
     
 
     return (
         <div className="navbar">
-            <div className="promotions">
+            <div className="promotions1">
                 <h2>Khuyến mãi đặc biệt</h2>
                 <Slider {...sliderSettings}>
                     <div className="promotion-slide">

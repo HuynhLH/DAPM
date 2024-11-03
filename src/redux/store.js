@@ -6,6 +6,7 @@ import categoryReducer from "./categorySlice";
 import dealReducer from "./dealSlice";
 import cartReducer from './cartSlice';
 import viewedProductsReducer from './viewedProductsSlice';
+import reviewReducer from './reviewSlice';
 
 
 
@@ -18,5 +19,6 @@ export default configureStore({
         deals: dealReducer,
         cart: cartReducer,
         viewedProducts: viewedProductsReducer,
+        reviews:reviewReducer,
     },
 });

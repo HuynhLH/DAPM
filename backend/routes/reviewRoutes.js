@@ -1,9 +1,13 @@
-const express = require('express');
-const reviewController = require('../controllers/reviewController');
+// routes/reviewRoutes.js
+const express = require("express");
+const { createReview, getReviews } = require("../controllers/reviewController");
+
 const router = express.Router();
 
-router.post('/', reviewController.addReview);
-router.get('/:productId', reviewController.getReviewsByProductId);
-router.delete('/:id', reviewController.deleteReview);
+// Endpoint thêm đánh giá
+router.post("/", createReview);
+
+// Endpoint lấy danh sách đánh giá
+router.get("/", getReviews);
 
 module.exports = router;

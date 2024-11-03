@@ -1,32 +1,42 @@
-const Review = require('../models/reviews');
+// controllers/reviewController.js
+const Review = require('../models/Review');
 
 // Thêm đánh giá mới
-exports.addReview = async (req, res) => {
+exports.createReview = async (req, res) => {
     try {
-        const newReview = new Review(req.body);
-        await newReview.save();
-        res.status(201).json(newReview);
+        const { userId, itemId, itemType, rating, comment } = req.body;
+
+        if (!['Product', 'Deal', 'FeaturedProduct'].includes(itemType)) {
+            return res.status(400).json({ message: "Invalid item type" });
+        }
+
+        const review = new Review({
+            userId,
+            itemId,
+            itemType,
+            rating,
+            comment
+        });
+
+        await review.save();
+        res.status(201).json({ message: "Review added successfully", review });
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        res.status(500).json({ message: "Failed to add review", error });
     }
 };
 
-// Lấy tất cả đánh giá của một sản phẩm
-exports.getReviewsByProductId = async (req, res) => {
+// Lấy danh sách đánh giá
+exports.getReviews = async (req, res) => {
     try {
-        const reviews = await Review.find({ product_id: req.params.productId });
+        const { itemId, itemType } = req.query;
+
+        if (!itemId || !['Product', 'Deal', 'FeaturedProduct'].includes(itemType)) {
+            return res.status(400).json({ message: "Invalid item type or item ID" });
+        }
+
+        const reviews = await Review.find({ itemId, itemType }).populate("userId", "username");
         res.status(200).json(reviews);
     } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-// Xóa đánh giá
-exports.deleteReview = async (req, res) => {
-    try {
-        await Review.findByIdAndDelete(req.params.id);
-        res.status(200).json({ message: 'Review deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).json({ message: "Failed to fetch reviews", error });
     }
 };
