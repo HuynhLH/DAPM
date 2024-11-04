@@ -209,6 +209,7 @@ const AdminProductManager = () => {
           <option value="red">Đỏ</option>
           <option value="blue">Xanh dương</option>
           <option value="green">Xanh lá</option>
+          <option value="yellow">Vàng</option>
         </select>
         <select
           className="admin-product-manager-input"

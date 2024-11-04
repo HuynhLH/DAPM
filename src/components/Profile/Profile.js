@@ -40,8 +40,8 @@ const Profile = () => {
             updateUser(user._id, updatedUser, dispatch, accessToken)
                 .then(() => {
                     alert("Thay đổi đã được lưu!");
-                    const newUser = { ...user, ...updatedUser }; // Cập nhật thông tin người dùng
-                    localStorage.setItem('currentUser', JSON.stringify(newUser)); // Lưu vào localStorage
+                    const newUser = { ...user, ...updatedUser }; 
+                    localStorage.setItem('currentUser', JSON.stringify(newUser)); 
                     dispatch(updateUserSuccess(newUser)); 
                     setIsEditable(false);
                 })
@@ -70,7 +70,7 @@ const Profile = () => {
                 <div className="profile-info">
                     <div className="avatar-container">
                         <img 
-                            src={'HINH1.jpg'} 
+                            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTa0ks3pHx5qWEJn5C0NltqENoTFQ9bWMShrQ&s'} 
                             alt="Avatar" 
                             className="profile-avatar"
                         />

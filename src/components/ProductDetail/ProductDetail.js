@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/cartSlice';
 import { addViewedProduct } from '../../redux/viewedProductsSlice';
 import ReviewForm from '../ReviewForm/ReviewForm';
+import { clearCart } from '../../redux/paymentSlice';
 import ReviewList from '../ReviewForm/ReviewList';
 import './ProductDetail.css';
 
@@ -12,6 +13,11 @@ const ProductDetail = () => {
     const product = location.state?.productData;
     const currentUser = useSelector(state => state.auth.login.currentUser);
     const dispatch = useDispatch();
+
+    const handlePayment = () => {
+        alert("Thanh toán thành công!");
+        dispatch(clearCart()); 
+    };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -48,13 +54,8 @@ const ProductDetail = () => {
                     <p className="product-price">{product.price} ₫</p>
                     <p className="product-description">{product.description}</p>
 
-                    <div className="product-availability">
-                        <p>Tình trạng: <span>{product.stock > 0 ? "Còn hàng" : "Hết hàng"}</span></p>
-                        <p>Đã bán: {product.sales || 0}</p>
-                    </div>
-
                     <div className="product-actions">
-                        <button className="buy-now-button">Mua ngay</button>
+                        <button className="buy-now-button" onClick={handlePayment} >Mua ngay</button>
                         <button className="add-to-cart-button" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
                     </div>
 
@@ -69,7 +70,6 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
-
             <div className="product-reviews">
                 <h3>Đánh giá sản phẩm</h3>
                 <ReviewForm productId={product._id} />

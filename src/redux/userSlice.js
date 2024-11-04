@@ -35,9 +35,9 @@ const userSlice = createSlice({
             }
         },
         updateUserFailed: (state, action) => {
-            state.user.isFetching = false;  // Thêm để đặt trạng thái fetching về false
+            state.user.isFetching = false;  
             state.user.error = true;
-            state.user.errorMessage = action.payload;  // Lưu thông tin lỗi nếu cần
+            state.user.errorMessage = action.payload;  
             console.error("Cập nhật không thành công:", action.payload);
         },
     },
