@@ -133,3 +133,34 @@
 .remove-button:active {
     transform: scale(0.95);
 }
+.cart-item-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.quantity-controls button {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 0 5px;
+    transition: background-color 0.2s;
+}
+
+.quantity-controls button:hover {
+    background-color: #ddd;
+}
+
+.item-quantity {
+    font-size: 16px;
+    width: 30px;
+    text-align: center;
+}

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, clearCart, loadCart } from '../../redux/cartSlice';
+import { removeFromCart, clearCart, loadCart, updateItemQuantity } from '../../redux/cartSlice';
 import { Link } from 'react-router-dom';
 import './Cart.css';
 
@@ -8,18 +8,27 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector(state => state.cart.items);
     const total = useSelector(state => state.cart.total);
+
     const loadCartFromLocalStorage = () => {
         const cart = localStorage.getItem('cart');
-        return cart ? JSON.parse(cart) : []; 
+        return cart ? JSON.parse(cart) : [];
     };
 
     useEffect(() => {
         const storedCart = loadCartFromLocalStorage();
-        dispatch(loadCart(storedCart)); 
+        dispatch(loadCart(storedCart));
     }, [dispatch]);
 
     const handleRemove = (item) => {
         dispatch(removeFromCart(item));
+    };
+
+    const handleQuantityChange = (item, newQuantity) => {
+        if (newQuantity > 0) {
+            dispatch(updateItemQuantity({ id: item.id, quantity: newQuantity }));
+        } else {
+            dispatch(removeFromCart(item)); 
+        }
     };
 
     const handleClear = () => {
@@ -40,6 +49,11 @@ const Cart = () => {
                                 <div className="cart-item-details">
                                     <span className="cart-item-name">{item.name}</span>
                                     <span className="cart-item-price">{item.price} VND</span>
+                                    <div className="quantity-controls">
+                                        <button onClick={() => handleQuantityChange(item, item.quantity - 1)}>-</button>
+                                        <span className="item-quantity">{item.quantity}</span>
+                                        <button onClick={() => handleQuantityChange(item, item.quantity + 1)}>+</button>
+                                    </div>
                                 </div>
                                 <button className="remove-button" onClick={() => handleRemove(item)}>Xóa</button>
                             </li>
@@ -48,7 +62,7 @@ const Cart = () => {
                     <h3 className="total-price">Tổng tiền: {total} VND</h3>
                     <button className="clear-cart-button" onClick={handleClear}>Xóa toàn bộ</button>
                     <Link to="/CheckoutPage">
-                        <button className="checkout-button">Thanh Toán</button> 
+                        <button className="checkout-button">Thanh Toán</button>
                     </Link>
                 </>
             )}
