@@ -1,4 +1,4 @@
-// Helper để lấy và lưu giỏ hàng vào localStorage
+
 export const getCart = () => {
     return JSON.parse(localStorage.getItem("cart")) || [];
 };
