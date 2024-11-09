@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Tải giỏ hàng từ localStorage khi ứng dụng khởi động
 const loadCartFromLocalStorage = () => {
     const cart = localStorage.getItem('cart');
     return cart ? JSON.parse(cart) : [];
@@ -8,7 +9,7 @@ const loadCartFromLocalStorage = () => {
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        items: loadCartFromLocalStorage(),
+        items: loadCartFromLocalStorage(), // Lấy giỏ hàng từ localStorage khi ứng dụng khởi động
         total: 0,
     },
     reducers: {
@@ -19,7 +20,9 @@ const cartSlice = createSlice({
             } else {
                 state.items.push({ ...action.payload, quantity: 1 });
             }
+            // Cập nhật tổng tiền giỏ hàng
             state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+            // Lưu giỏ hàng vào localStorage
             localStorage.setItem('cart', JSON.stringify(state.items));
         },
         removeFromCart: (state, action) => {
@@ -28,7 +31,7 @@ const cartSlice = createSlice({
                 const item = state.items[index];
                 state.total -= item.price * item.quantity;
                 state.items.splice(index, 1);
-                localStorage.setItem('cart', JSON.stringify(state.items));
+                localStorage.setItem('cart', JSON.stringify(state.items)); // Lưu lại giỏ hàng
             }
         },
         updateItemQuantity: (state, action) => {
@@ -37,13 +40,13 @@ const cartSlice = createSlice({
             if (item) {
                 item.quantity = quantity;
                 state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
-                localStorage.setItem('cart', JSON.stringify(state.items));
+                localStorage.setItem('cart', JSON.stringify(state.items)); // Lưu lại giỏ hàng
             }
         },
         clearCart: (state) => {
             state.items = [];
             state.total = 0;
-            localStorage.removeItem('cart');
+            localStorage.removeItem('cart'); // Xóa giỏ hàng khỏi localStorage
         },
         loadCart: (state, action) => {
             const payload = action.payload || [];

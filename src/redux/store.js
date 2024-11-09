@@ -4,10 +4,10 @@ import productReducer from "./productSlice";
 import userReducer from "./userSlice";
 import categoryReducer from "./categorySlice";
 import dealReducer from "./dealSlice";
-import cartReducer from './cartSlice';
 import viewedProductsReducer from './viewedProductsSlice';
 import reviewReducer from './reviewSlice';
-
+import productDetailReducer from './productDetailSlice';
+import cartReducer from './cartSlice';
 
 
 export default configureStore({
@@ -17,8 +17,9 @@ export default configureStore({
         users: userReducer,
         categories: categoryReducer,
         deals: dealReducer,
-        cart: cartReducer,
         viewedProducts: viewedProductsReducer,
         reviews:reviewReducer,
+        productDetail: productDetailReducer,
+        cart: cartReducer,
     },
 });

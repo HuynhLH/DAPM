@@ -33,6 +33,9 @@ const Navbar = () => {
         pauseOnHover: false, 
         arrows: false 
     };
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN');
+      };
     
 
     return (
@@ -91,7 +94,7 @@ const Navbar = () => {
                                     <div className="product-info">
                                         <h3 className="product-name1">{product.Name}</h3>
                                         <div className="product-pricing">
-                                            <span className="product-price">{product.price} ₫</span>
+                                            <span className="product-price">Giá: {product.price.toLocaleString('vi-VN')} VND</span>
                                         </div>
                                     </div>
                                 </div>

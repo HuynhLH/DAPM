@@ -117,6 +117,9 @@ const AdminProductManager = () => {
       }
     }
   };
+  const formatPrice = (price) => {
+    return price.toLocaleString('vi-VN');
+  };
 
   const filteredProducts = products.filter(product => {
     const matchesName = product.Name.toLowerCase().includes(searchName.toLowerCase());
@@ -255,7 +258,9 @@ const AdminProductManager = () => {
             <li className="admin-product-manager-item" key={product._id}>
               <h2 className="admin-product-manager-item-title">{product.Name}</h2>
               <p className="admin-product-manager-item-description">{product.description}</p>
-              <p className="admin-product-manager-item-price">Giá: {product.price} VND</p>
+              <p className="admin-product-manager-item-price">
+              Giá: {product.price.toLocaleString('vi-VN')} VND
+              </p>
               <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} />
               <button className="admin-product-manager-button" onClick={() => handleEdit(product)}>Chỉnh sửa</button>
               <button className="admin-product-manager-button" onClick={() => handleDelete(product._id)}>Xóa</button>
@@ -276,7 +281,9 @@ const AdminProductManager = () => {
           <li className="admin-product-manager-item" key={product._id}>
             <h2 className="admin-product-manager-item-title">{product.Name}</h2>
             <p className="admin-product-manager-item-description">{product.description}</p>
-            <p className="admin-product-manager-item-price">Giá: {product.price} VND</p>
+            <p className="admin-product-manager-item-price">
+            Giá: {product.price.toLocaleString('vi-VN')} VND
+            </p>
             <img className="admin-product-manager-item-image" src={product.image_url} alt={product.Name} />
             <button className="admin-product-manager-button" onClick={() => handleEdit(product)}>Chỉnh sửa</button>
             <button className="admin-product-manager-button" onClick={() => handleDelete(product._id)}>Xóa</button>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import { loginUser } from "../../redux/apiRequest";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from '../../redux/cartSlice';
+import { loadCart } from '../../redux/cartSlice';
 
 const Login = () => {
   const [username, setUsername] = useState('');
@@ -40,7 +40,7 @@ const Login = () => {
       if (storedCartAfterLogin) {
         const cartItems = JSON.parse(storedCartAfterLogin);
         cartItems.forEach(item => {
-          dispatch(addToCart(item));
+          dispatch(loadCart(item));
         });
       }
 

@@ -20,6 +20,8 @@ const DealsPage = () => {
     const { categories } = useSelector((state) => state.categories); 
     const currentUser = useSelector(state => state.auth.login.currentUser);
 
+
+
     useEffect(() => {
         dispatch(fetchDeals());
         dispatch(fetchCategories()); 
@@ -33,13 +35,16 @@ const DealsPage = () => {
             alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
         }
     };
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN');
+      };
 
     const filteredDeals = deals.filter(deal => {
         const price = parseFloat(deal.price) || 0;
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
         const matchesSearchTerm = deal.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = selectedCategory ? deal.category._id === selectedCategory : true; // Match category
+        const matchesCategory = selectedCategory ? deal.category._id === selectedCategory : true; 
         return (isNaN(min) || price >= min) && (isNaN(max) || price <= max) && matchesSearchTerm && matchesCategory;
     });
     
@@ -116,7 +121,7 @@ const DealsPage = () => {
                         <div className="deal-card" key={deal._id} onClick={() => handleDealClick(deal)}>
                             <img src={deal.image_url} alt={deal.name} className="deal-image" />
                             <h3 className="deal-name">{deal.name}</h3>
-                            <p className="deal-price">{deal.price} ₫</p>
+                            <p className="deal-price">Giá: {deal.price.toLocaleString('vi-VN')} VND</p>
                             <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
                             <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
                             <button 

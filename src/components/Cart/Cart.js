@@ -26,10 +26,10 @@ const Cart = () => {
     const handleQuantityChange = (item, newQuantity) => {
         if (newQuantity > 0) {
             dispatch(updateItemQuantity({ id: item.id, quantity: newQuantity }));
-        } else {
+        } else if (newQuantity === 0) {
             dispatch(removeFromCart(item)); 
         }
-    };
+    };    
 
     const handleClear = () => {
         dispatch(clearCart());

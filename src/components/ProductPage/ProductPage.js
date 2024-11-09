@@ -34,6 +34,9 @@ const ProductPage = () => {
             dispatch(fetchCategories()); 
         }
     }, [status, dispatch]);
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN');
+      };
 
     const handleAddToCart = (product) => {
       if (currentUser) {
@@ -138,7 +141,7 @@ const ProductPage = () => {
                     <div className="product-card" key={product._id} onClick={() => handleProductClick(product)}>
                         <img src={product.image_url} alt={product.Name} className="product-image" />
                         <h2 className="product-name2">{product.Name}</h2>
-                        <p className="product-price">{product.price} ₫</p>
+                        <p className="product-price">Giá: {product.price.toLocaleString('vi-VN')} VND</p>
                         <button className="add-to-cart-button1" onClick={(e) => {
                             e.stopPropagation(); 
                             handleAddToCart(product); 

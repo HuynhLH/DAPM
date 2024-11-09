@@ -4,7 +4,7 @@ const userSlice = createSlice({
     name: "user",
     initialState: {
         user: {
-            allUsers: [],  // Khởi tạo như một mảng rỗng
+            allUsers: [],  
             currentUser: null,
             isFetching: false, 
             error: false,

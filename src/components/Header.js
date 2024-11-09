@@ -6,7 +6,7 @@ import './Navbar.css';
 import { logOut } from '../redux/apiRequest';
 import { createAxios } from '../createInstance';
 import { logOutSuccess } from '../redux/authSlice';
-import { clearCart } from '../redux/cartSlice';
+import { clearCart  } from '../redux/cartSlice';
 
 const Header = () => {
     const user = useSelector((state) => state.auth.login.currentUser);
@@ -24,7 +24,7 @@ const Header = () => {
     const closeMobileMenu = () => setClick(false);
 
     const handleLogout = () => {
-        dispatch(clearCart()); 
+        dispatch(clearCart ()); 
         logOut(dispatch, id, navigate, accessToken, axiosJWT); 
     };
 
@@ -43,6 +43,7 @@ const Header = () => {
             setSearchTerm(''); 
         }
     };
+
 
     useEffect(() => {
         showButton();

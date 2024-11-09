@@ -18,6 +18,9 @@ const ProductDetail = () => {
         alert("Thanh toán thành công!");
         dispatch(clearCart()); 
     };
+    const formatPrice = (price) => {
+        return price.toLocaleString('vi-VN');
+      };
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -38,10 +41,13 @@ const ProductDetail = () => {
             alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
             return;
         }
-
-        dispatch(addToCart(product));
+        const { _id } = currentUser; 
+        const { _id: productId, dealId,price,image_url,name,quantity = 1 } = product; 
+        dispatch(addToCart({ id: productId, dealId, quantity,price,name,image_url }));
         alert('Sản phẩm đã được thêm vào giỏ hàng!');
     };
+   
+    
 
     return (
         <div className="product-detail">
@@ -51,8 +57,9 @@ const ProductDetail = () => {
                 </div>
                 <div className="product-info">
                     <h1 className="product-name">{product.Name} {product.name}</h1>
-                    <p className="product-price">{product.price} ₫</p>
+                    <p className="product-price">Giá: {product.price.toLocaleString('vi-VN')} VND</p>
                     <p className="product-description">{product.description}</p>
+
 
                     <div className="product-actions">
                         <button className="buy-now-button" onClick={handlePayment} >Mua ngay</button>
@@ -70,6 +77,7 @@ const ProductDetail = () => {
                     </div>
                 </div>
             </div>
+
             <div className="product-reviews">
                 <h3>Đánh giá sản phẩm</h3>
                 <ReviewForm productId={product._id} />
