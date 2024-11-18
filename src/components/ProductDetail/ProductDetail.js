@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCart } from '../../redux/cartSlice';
 import { addViewedProduct } from '../../redux/viewedProductsSlice';
 import ReviewForm from '../ReviewForm/ReviewForm';
-import { clearCart } from '../../redux/paymentSlice';
-import ReviewList from '../ReviewForm/ReviewList';
 import './ProductDetail.css';
 
 const ProductDetail = () => {
@@ -13,11 +11,8 @@ const ProductDetail = () => {
     const product = location.state?.productData;
     const currentUser = useSelector(state => state.auth.login.currentUser);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const handlePayment = () => {
-        alert("Thanh toán thành công!");
-        dispatch(clearCart()); 
-    };
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN');
       };
@@ -35,6 +30,9 @@ const ProductDetail = () => {
     if (!product) {
         return <p>Không tìm thấy thông tin sản phẩm.</p>;
     }
+    const goBack =()=> {
+        navigate(-1);
+    }
 
     const handleAddToCart = () => {
         if (!currentUser) {
@@ -42,15 +40,19 @@ const ProductDetail = () => {
             return;
         }
         const { _id } = currentUser; 
-        const { _id: productId, dealId,price,image_url,name,quantity = 1 } = product; 
-        dispatch(addToCart({ id: productId, dealId, quantity,price,name,image_url }));
+        const { _id: productId, dealId,price,image_url,name,Name,quantity = 1 } = product; 
+        dispatch(addToCart({ id: productId, dealId, quantity,price,name,Name,image_url }));
         alert('Sản phẩm đã được thêm vào giỏ hàng!');
     };
    
-    
+    if (!product) {
+        return <p>Không tìm thấy thông tin sản phẩm.</p>;
+      }
+  
 
     return (
         <div className="product-detail">
+        <button onClick={goBack} className='product-detail-goback'>Quay về</button>
             <div className="product-detail-container">
                 <div className="product-image-container">
                     <img src={product.image_url} alt={product.Name} className="product-detail-image" />
@@ -60,9 +62,8 @@ const ProductDetail = () => {
                     <p className="product-price">Giá: {product.price.toLocaleString('vi-VN')} VND</p>
                     <p className="product-description">{product.description}</p>
 
-
                     <div className="product-actions">
-                        <button className="buy-now-button" onClick={handlePayment} >Mua ngay</button>
+                        <button className="buy-now-button" >Mua ngay</button>
                         <button className="add-to-cart-button" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
                     </div>
 
@@ -79,9 +80,7 @@ const ProductDetail = () => {
             </div>
 
             <div className="product-reviews">
-                <h3>Đánh giá sản phẩm</h3>
                 <ReviewForm productId={product._id} />
-                <ReviewList productId={product._id} />
             </div>
         </div>
     );

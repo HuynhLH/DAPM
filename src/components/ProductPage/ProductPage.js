@@ -4,6 +4,7 @@ import { fetchProducts } from '../../redux/productSlice';
 import { fetchCategories } from '../../redux/categorySlice'; 
 import './ProductPage.css';
 import { addToCart } from '../../redux/cartSlice';
+import { fetchReviews } from '../../redux/reviewSlice'; 
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const ProductPage = () => {
@@ -37,25 +38,21 @@ const ProductPage = () => {
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN');
       };
-
-    const handleAddToCart = (product) => {
-      if (currentUser) {
-          dispatch(addToCart(product));
-          alert(`${product.name} đã được thêm vào giỏ hàng!`);
-      } else {
-          alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
-      }
-    };
     
-    const filteredProducts = products.filter(product => {
+      const filteredProducts = products.filter(product => {
         const price = parseFloat(product.price);
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
         const withinPriceRange = (isNaN(min) || price >= min) && (isNaN(max) || price <= max);
         const matchesSearchTerm = product.Name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = selectedCategory ? product.category_id === selectedCategory : true; 
+        const matchesCategory = selectedCategory
+            ? product.category && product.category._id === selectedCategory
+            : true;
+    
         return withinPriceRange && matchesSearchTerm && matchesCategory;
     });
+      
+    
 
     const sortedProducts = filteredProducts.sort((a, b) => {
         if (sortOrder === 'lowToHigh') {
@@ -142,10 +139,6 @@ const ProductPage = () => {
                         <img src={product.image_url} alt={product.Name} className="product-image" />
                         <h2 className="product-name2">{product.Name}</h2>
                         <p className="product-price">Giá: {product.price.toLocaleString('vi-VN')} VND</p>
-                        <button className="add-to-cart-button1" onClick={(e) => {
-                            e.stopPropagation(); 
-                            handleAddToCart(product); 
-                        }}>Thêm vào giỏ hàng</button>
                     </div>
                 ))}
             </div>

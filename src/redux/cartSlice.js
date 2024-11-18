@@ -2,9 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Tải giỏ hàng từ localStorage khi ứng dụng khởi động
 const loadCartFromLocalStorage = () => {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
+    try {
+        const cart = localStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
+    } catch (e) {
+        console.error("Error loading cart from localStorage", e);
+        return [];  // Nếu có lỗi, trả về giỏ hàng rỗng
+    }
 };
+
 
 const cartSlice = createSlice({
     name: "cart",
@@ -46,7 +52,7 @@ const cartSlice = createSlice({
         clearCart: (state) => {
             state.items = [];
             state.total = 0;
-            localStorage.removeItem('cart'); // Xóa giỏ hàng khỏi localStorage
+            localStorage.removeItem('cart'); 
         },
         loadCart: (state, action) => {
             const payload = action.payload || [];

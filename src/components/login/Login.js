@@ -34,16 +34,6 @@ const Login = () => {
     try {
       await loginUser(newUser, dispatch, navigate);
 
-      const storedCartKey = `cart_${username}`;
-      const storedCartAfterLogin = localStorage.getItem(storedCartKey);
-      
-      if (storedCartAfterLogin) {
-        const cartItems = JSON.parse(storedCartAfterLogin);
-        cartItems.forEach(item => {
-          dispatch(loadCart(item));
-        });
-      }
-
       if (rememberMe) {
         localStorage.setItem('rememberedUsername', username);
         localStorage.setItem('rememberedPassword', password);

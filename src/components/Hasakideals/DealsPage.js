@@ -26,27 +26,21 @@ const DealsPage = () => {
         dispatch(fetchDeals());
         dispatch(fetchCategories()); 
     }, [dispatch]);
-
-    const handleAddToCart = (deal) => {
-        if (currentUser) {
-            dispatch(addToCart(deal));
-            alert(`${deal.name} đã được thêm vào giỏ hàng!`);
-        } else {
-            alert('Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!');
-        }
-    };
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN');
       };
 
-    const filteredDeals = deals.filter(deal => {
+      const filteredDeals = deals.filter(deal => {
         const price = parseFloat(deal.price) || 0;
         const min = parseFloat(minPrice);
         const max = parseFloat(maxPrice);
         const matchesSearchTerm = deal.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesCategory = selectedCategory ? deal.category._id === selectedCategory : true; 
+        const matchesCategory = selectedCategory 
+            ? deal.category && deal.category._id === selectedCategory 
+            : true; 
         return (isNaN(min) || price >= min) && (isNaN(max) || price <= max) && matchesSearchTerm && matchesCategory;
     });
+    
     
     const sortedDeals = filteredDeals.sort((a, b) => {
         if (sortOrder === 'lowToHigh') return (a.price || 0) - (b.price || 0);
@@ -124,15 +118,6 @@ const DealsPage = () => {
                             <p className="deal-price">Giá: {deal.price.toLocaleString('vi-VN')} VND</p>
                             <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
                             <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
-                            <button 
-                                className="deal-button" 
-                                onClick={(e) => {
-                                    e.stopPropagation(); 
-                                    handleAddToCart(deal); 
-                                }}
-                            >
-                                Thêm vào giỏ hàng
-                            </button>
                         </div>
                     ))}
                 </div>

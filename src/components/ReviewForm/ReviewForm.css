@@ -1,0 +1,120 @@
+/* Đặt các lớp CSS cho review để không bị ảnh hưởng bởi các phần khác */
+.review-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+    margin-top: 30px;
+  }
+  
+  /* Tiêu đề của phần review */
+  .review-container h4 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Thông tin đánh giá */
+  .review-container .rating-container {
+    margin: 10px 0;
+    text-align: center;
+  }
+  
+  .review-container textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    font-family: 'Arial', sans-serif;
+    transition: border-color 0.3s ease;
+  }
+  
+  .review-container textarea:focus {
+    border-color: #4CAF50;
+    outline: none;
+  }
+  
+  .review-container button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .review-container button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Đánh giá cụ thể của sản phẩm */
+  .review-container .review-item {
+    background-color: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .review-container .review-item .rating-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+  
+  .review-container .review-item p {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  .review-container .review-item .user-info {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .review-container .review-item .review-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .review-container .review-item .review-actions button {
+    background-color: #f44336;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .review-container .review-item .review-actions button:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Thông báo khi không có đánh giá */
+  .review-container .no-reviews {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #888;
+    margin-top: 20px;
+  }
+  
+  /* Thông báo yêu cầu đăng nhập */
+  .review-container .login-prompt {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #FF5722;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+  

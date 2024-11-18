@@ -8,6 +8,10 @@ import viewedProductsReducer from './viewedProductsSlice';
 import reviewReducer from './reviewSlice';
 import productDetailReducer from './productDetailSlice';
 import cartReducer from './cartSlice';
+import shippingAddressReducer from './shippingSlice';
+import orderReducer from './orderSlice';
+import paymentReducer from './paymentSlice';
+
 
 
 export default configureStore({
@@ -21,5 +25,8 @@ export default configureStore({
         reviews:reviewReducer,
         productDetail: productDetailReducer,
         cart: cartReducer,
+        shippingAddress: shippingAddressReducer,
+        order: orderReducer,
+        payment: paymentReducer,
     },
 });

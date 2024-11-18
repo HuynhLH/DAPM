@@ -1,27 +1,27 @@
+// paymentSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    items: [], 
+  paymentMethod: 'Credit Card',
+  loading: false,
+  error: null,
 };
 
-const cartSlice = createSlice({
-    name: 'cart',
-    initialState,
-    reducers: {
-        addToCart(state, action) {
-            const existingItem = state.items.find(item => item._id === action.payload._id);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                state.items.push({ ...action.payload, quantity: 1 }); 
-            }
-        },
-        clearCart(state) {
-            state.items = []; 
-        },
+const paymentSlice = createSlice({
+  name: 'payment',
+  initialState,
+  reducers: {
+    setPaymentMethod: (state, action) => {
+      state.paymentMethod = action.payload;
     },
+    setLoading: (state) => {
+      state.loading = true;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
+  },
 });
 
-export const { addToCart, clearCart } = cartSlice.actions;
-
-export default cartSlice.reducer;
+export const { setPaymentMethod, setLoading, setError } = paymentSlice.actions;
+export default paymentSlice.reducer;

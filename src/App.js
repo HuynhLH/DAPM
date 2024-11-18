@@ -16,8 +16,8 @@ import ProductPage from './components/ProductPage/ProductPage';
 import ProductDetail from './components/ProductDetail/ProductDetail';
 import RecentlyViewedPage from './components/RecentlyViewedPage/RecentlyViewedPage';
 import Cart from './components/Cart/Cart';
-import CheckoutPage from './components/CheckoutPage/CheckoutPage';
 import Guide from './components/Guide/Guide';
+import ShippingForm from './components/ShippingForm/ShippingForm';
 
 
 import { Elements } from '@stripe/react-stripe-js';
@@ -65,15 +65,7 @@ function App() {
             }
           />
           <Route
-            path="/CheckoutPage"
-            element={
-              <HeaderFooterlayout>
-                <CheckoutPage />
-              </HeaderFooterlayout>
-            }
-          />
-          <Route
-            path='/hotdeals'
+            path='/hotdeals'  
             element={
               <HeaderFooterlayout>
                 <HotDeals/>
@@ -85,6 +77,14 @@ function App() {
             element={
               <HeaderFooterlayout>
                 <Cart/>
+              </HeaderFooterlayout>
+            }
+          />
+                      <Route
+            path='/shipping'
+            element={
+              <HeaderFooterlayout>
+                <ShippingForm/>
               </HeaderFooterlayout>
             }
           />

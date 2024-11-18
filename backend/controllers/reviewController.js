@@ -40,3 +40,28 @@ exports.getReviews = async (req, res) => {
         res.status(500).json({ message: "Failed to fetch reviews", error });
     }
 };
+
+// Xóa đánh giá
+exports.deleteReview = async (req, res) => {
+    try {
+        const { reviewId, userId } = req.body;
+
+        if (!reviewId) {
+            return res.status(400).json({ message: "Review ID is required" });
+        }
+        const review = await Review.findById(reviewId);
+        if (!review) {
+            return res.status(404).json({ message: "Review not found" });
+        }
+
+        if (review.userId.toString() !== userId) {
+            return res.status(403).json({ message: "You are not authorized to delete this review" });
+        }
+        await Review.findByIdAndDelete(reviewId);
+
+        res.status(200).json({ message: "Review deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Failed to delete review", error });
+    }
+};
+
