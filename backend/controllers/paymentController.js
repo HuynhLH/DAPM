@@ -24,4 +24,21 @@ const getPaymentMethods = async (req, res) => {
   }
 };
 
-module.exports = { createPaymentMethod, getPaymentMethods };
+// Xóa phương thức thanh toán
+const deletePaymentMethod = async (req, res) => {
+  try {
+    const { id } = req.params; // Lấy id từ params
+    const deletedPaymentMethod = await PaymentMethod.findByIdAndDelete(id);
+
+    if (!deletedPaymentMethod) {
+      return res.status(404).json({ message: 'Payment method not found' });
+    }
+
+    res.status(200).json({ message: 'Payment method deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting payment method', error: error.message });
+  }
+};
+
+
+module.exports = { createPaymentMethod, getPaymentMethods,deletePaymentMethod };

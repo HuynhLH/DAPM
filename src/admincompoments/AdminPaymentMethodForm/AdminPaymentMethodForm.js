@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPaymentMethod, fetchPaymentMethods } from '../../redux/paymentMethodAction';
+import { createPaymentMethod, fetchPaymentMethods, deletePaymentMethod } from '../../redux/paymentMethodAction';
+import './AdminPaymentMethodForm.css';
 
 const AdminPaymentMethodForm = () => {
   const [method, setMethod] = useState('');
   const [description, setDescription] = useState('');
   const dispatch = useDispatch();
 
-  const { paymentMethods, isFetching, error } = useSelector((state) => {
-    console.log("Current payment methods:", state.paymentMethod);
-    return state.paymentMethod || {};
-  });
-  const user = useSelector((state) => state.auth.login.currentUser);
+  const { paymentMethods, isFetching, error } = useSelector((state) => state.paymentMethod);
+  const user = useSelector((state) => state.auth.login.currentUser );
 
   // Hàm để lấy danh sách phương thức thanh toán
   const getPaymentMethods = async () => {
@@ -36,8 +34,14 @@ const AdminPaymentMethodForm = () => {
     setDescription(''); 
   };
 
+  const handleDelete = async (id) => {
+    const accessToken = user?.accessToken;
+    await deletePaymentMethod(id, dispatch, accessToken);
+    await getPaymentMethods(); // Cập nhật lại danh sách sau khi xóa
+  };
+
   return (
-    <div className="payment-method-form">
+    <div className="admin-payment-method-form">
       <h2>Phương Thức Thanh Toán</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -73,13 +77,18 @@ const AdminPaymentMethodForm = () => {
           paymentMethods.map((method) => (
             <li key={method._id}>
               {method.method}: {method.description}
+              <button1 
+                onClick={() => handleDelete(method._id)} 
+                className="delete-button1" 
+              >
+                Xóa
+              </button1>
             </li>
           ))
         ) : (
           <p>Không có phương thức thanh toán nào.</p>
         )}
       </ul>
-
     </div>
   );
 };

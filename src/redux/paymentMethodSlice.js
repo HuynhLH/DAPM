@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const paymentMethodSlice = createSlice({
-  name: 'paymentMethod', // Tên của slice phải giống với cái bạn truy cập trong useSelector
+  name: 'paymentMethod',
   initialState: {
     paymentMethods: [],
     isFetching: false,
@@ -33,6 +33,18 @@ const paymentMethodSlice = createSlice({
       state.isFetching = false;
       state.error = true;
     },
+    deleteStart: (state) => {
+      state.isFetching = true;
+      state.error = false;
+    },
+    deleteSuccess: (state, action) => {
+      state.isFetching = false;
+      state.paymentMethods = state.paymentMethods.filter(method => method._id !== action.payload);
+    },
+    deleteFailed: (state) => {
+      state.isFetching = false;
+      state.error = true;
+    },
   },
 });
 
@@ -43,6 +55,9 @@ export const {
   createStart,
   createSuccess,
   createFailed,
+  deleteStart,
+  deleteSuccess,
+  deleteFailed,
 } = paymentMethodSlice.actions;
 
 export default paymentMethodSlice.reducer;

@@ -1,0 +1,147 @@
+/* Main container */
+.order-container {
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title of the order */
+.order-title {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #333;
+    font-weight: bold;
+    letter-spacing: 1px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Shipping address, items, payment method, and order summary sections */
+.shipping-address, .order-items, .payment-method, .order-summary {
+    margin-bottom: 25px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    animation: slideUp 0.7s ease-in-out;
+}
+
+/* Headers for sections */
+.hh {
+    font-size: 22px;
+    margin-bottom: 12px;
+    color: #444;
+    font-weight: 500;
+}
+
+/* Individual order items */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Item image style */
+.order-item img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    margin-right: 20px;
+    border-radius: 5px;
+}
+
+/* Hover effect for order items */
+.order-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Order summary section */
+.order-summary-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
+    color: #555;
+    font-size: 18px;
+}
+
+/* Place order button */
+.order-button {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background-color: #3a86ff;
+    color: white;
+    font-size: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.order-button:hover {
+    background-color: #2b69d4;
+    transform: translateY(-3px);
+}
+
+/* Order summary box */
+.order-summary {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+/* Payment method form section */
+.payment-method {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+}
+
+/* Subtle animation effects */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+input[type="text"], input[type="password"], select {
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, select:focus {
+    border-color: #3a86ff;
+}
+.order-button:hover {
+    background-color: #2b69d4;
+    transform: translateY(-3px) scale(1.05);
+}

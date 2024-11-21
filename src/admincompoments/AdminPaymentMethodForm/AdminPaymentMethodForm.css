@@ -1,100 +1,133 @@
+/* AdminPaymentMethodForm.css */
+
 /* Wrapper container */
-.payment-method-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    animation: fadeIn 0.5s ease-out;
-  }
-  
-  /* Heading */
-  .payment-method-form h2 {
-    font-size: 24px;
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Form element */
-  .payment-method-form form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  /* Input fields and textarea */
-  .payment-method-form input[type="text"],
-  .payment-method-form textarea {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .payment-method-form input[type="text"]:focus,
-  .payment-method-form textarea:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-    outline: none;
-  }
-  
-  /* Submit button */
-  .payment-method-form button {
-    padding: 12px 20px;
-    background-color: #007bff;
-    color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-  
-  .payment-method-form button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05);
-  }
-  
-  .payment-method-form button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
-  
-  /* Error message */
-  .payment-method-form p {
-    color: red;
-    text-align: center;
-    font-size: 14px;
-  }
-  
-  /* Animation for form appearance */
-  @keyframes fadeIn {
-    0% {
+.admin-payment-method-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Heading */
+.admin-payment-method-form h2 {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Form element */
+.admin-payment-method-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input fields and textarea */
+.admin-payment-method-form input[type="text"],
+.admin-payment-method-form textarea {
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.admin-payment-method-form input[type="text"]:focus,
+.admin-payment-method-form textarea:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+/* Submit button */
+.admin-payment-method-form button {
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100%; /* Đặt chiều rộng của button bằng 100% */
+}
+
+.admin-payment-method-form button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.admin-payment-method-form button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.admin-payment-method-form p {
+  color: red;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* Animation for form appearance */
+@keyframes fadeIn {
+  0% {
       opacity: 0;
       transform: translateY(20px);
-    }
-    100% {
+  }
+  100% {
       opacity: 1;
       transform: translateY(0);
-    }
   }
-  
-  /* Responsive styles */
-  @media (max-width: 600px) {
-    .payment-method-form {
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .admin-payment-method-form {
       padding: 15px;
-    }
-  
-    .payment-method-form input[type="text"],
-    .payment-method-form textarea {
-      font-size: 14px;
-    }
-  
-    .payment-method-form button {
-      font-size: 14px;
-    }
   }
-  
+
+  .admin-payment-method-form input[type="text"],
+  .admin-payment-method-form textarea {
+      font-size: 14px;
+  }
+
+  .admin-payment-method-form button {
+      font-size: 14px;
+  }
+}
+
+/* List styles */
+.admin-payment-method-form ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-payment-method-form li {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+}
+
+.admin-payment-method-form li:hover {
+  background-color: #f1f1f1;
+}
+.delete-button1 {
+  background-color: #ff4d4d; 
+  color: white; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 5px 10px; 
+  cursor: pointer;
+  transition: background-color 0.3s; 
+}
+
+.delete-button1:hover {
+  background-color: #e60000; /* Màu đỏ đậm hơn khi hover */
+}

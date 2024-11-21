@@ -27,7 +27,7 @@ export default configureStore({
         cart: cartReducer,
         shippingAddress: shippingAddressReducer,
         order: orderReducer,
-        paymentMethods: paymentMethodReducer,
+        paymentMethod: paymentMethodReducer,
 
     },
 });

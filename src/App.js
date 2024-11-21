@@ -17,6 +17,7 @@ import ProductDetail from './components/ProductDetail/ProductDetail';
 import RecentlyViewedPage from './components/RecentlyViewedPage/RecentlyViewedPage';
 import Cart from './components/Cart/Cart';
 import Guide from './components/Guide/Guide';
+import Order from './components/Order/Order';
 import ShippingForm from './components/ShippingForm/ShippingForm';
 
 
@@ -85,6 +86,14 @@ function App() {
             element={
               <HeaderFooterlayout>
                 <ShippingForm/>
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path='/order'
+            element={
+              <HeaderFooterlayout>
+                <Order/>
               </HeaderFooterlayout>
             }
           />

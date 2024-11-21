@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; 
 import { 
   createShippingAddress, 
   updateShippingAddress, 
   deleteShippingAddress, 
   getShippingAddresses 
 } from '../../redux/shippingSlice';
-import { fetchPaymentMethods } from '../../redux/paymentMethodAction'; // Action từ paymentMethodActions
+import { cityData } from '../CITYDATA/CityData'; 
 import './ShippingForm.css'; 
 
 const ShippingAddressForm = () => {
@@ -17,69 +18,71 @@ const ShippingAddressForm = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState('');
 
+  
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
 
-  // Redux state selectors
-  const user = useSelector((state) => state.auth?.login?.currentUser );
+  const user = useSelector((state) => state.auth?.login?.currentUser  );
   const shippingAddresses = useSelector((state) => state.shippingAddress?.shippingAddresses || []);
-  const paymentMethods = useSelector((state) => state.paymentMethod?.paymentMethods || []);
   const loading = useSelector((state) => state.shippingAddress?.loading);
   const error = useSelector((state) => state.shippingAddress?.error);
+  const cartItems = useSelector((state) => state.cart.items);
 
   useEffect(() => {
     if (user) {
-      dispatch(getShippingAddresses(user._id)); // Fetch shipping addresses của user
+      dispatch(getShippingAddresses(user._id));
     }
-    fetchPaymentMethods(dispatch); // Fetch payment methods
   }, [user, dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!user) {
-      alert('Please log in first!');
-      return;
+        alert('Please log in first!');
+        return;
     }
 
     if (!address || !city || !district || !ward || !phoneNumber) {
-      alert('All fields are required');
-      return;
+        alert('All fields are required');
+        return;
     }
 
     const newAddress = {
-      id: isEditing ? selectedAddress.id : new Date().getTime().toString(),
-      user: user._id,
-      address,
-      city,
-      district,
-      ward,
-      phoneNumber,
-      paymentMethod,
+        id: isEditing ? selectedAddress.id : new Date().getTime().toString(),
+        user: user._id,
+        address,
+        city,
+        district,
+        ward,
+        phoneNumber,
     };
 
     if (isEditing) {
-      dispatch(updateShippingAddress(newAddress)).then(() => resetForm());
+        dispatch(updateShippingAddress(newAddress)).then(() => {
+            resetForm();
+        });
     } else {
-      dispatch(createShippingAddress(newAddress)).then(() => resetForm());
+      dispatch(createShippingAddress(newAddress)).then(() => {
+        navigate('/order', { state: { cartItems, shippingAddresses: newAddress } });
+        resetForm();
+    });
     }
-  };
-
+};
   const handleEdit = (address) => {
     setAddress(address.address);
     setCity(address.city);
     setDistrict(address.district);
     setWard(address.ward);
     setPhoneNumber(address.phoneNumber);
-    setPaymentMethod(address.paymentMethod);
     setIsEditing(true);
     setSelectedAddress(address);
   };
 
-  const handleDelete = (addressId) => {
+  const handleDelete = async (addressId) => {
     if (addressId) {
-      dispatch(deleteShippingAddress(addressId));
+      await dispatch(deleteShippingAddress(addressId));
+      await dispatch(getShippingAddresses(user._id));
     } else {
       console.log("Invalid ID");
     }
@@ -91,7 +94,6 @@ const ShippingAddressForm = () => {
     setDistrict('');
     setWard('');
     setPhoneNumber('');
-    setPaymentMethod('');
     setIsEditing(false);
     setSelectedAddress(null);
   };
@@ -104,7 +106,7 @@ const ShippingAddressForm = () => {
         <h2>{isEditing ? 'Update Shipping Address' : 'Add Shipping Address'}</h2>
 
         <div className="input-group">
-          <label>Address</label>
+          <label>Địa Chỉ</label>
           <input
             type="text"
             value={address}
@@ -114,54 +116,43 @@ const ShippingAddressForm = () => {
         </div>
 
         <div className="input-group">
-          <label>City</label>
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            placeholder="City"
-          />
+          <label>Thành Phố</label>
+          <select value={city} onChange={(e) => setCity(e.target.value)}>
+            <option value="">Chọn thành phố</option>
+            {cityData.map((cityItem) => (
+              <option key={cityItem.name} value={cityItem.name}>{cityItem.name}</option>
+            ))}
+          </select>
         </div>
 
         <div className="input-group">
-          <label>District</label>
-          <input
-            type="text"
-            value={district}
-            onChange={(e) => setDistrict(e.target.value)}
-            placeholder="District"
-          />
-        </div>
-        <div className="input-group">
-          <label>Ward</label>
-          <input
-            type="text"
-            value={ward}
-            onChange={(e) => setWard(e.target.value)}
-            placeholder="Ward"
-          />
+          <label>Quận/Huyện</label>
+          <select value={district} onChange={(e) => setDistrict(e.target.value)} disabled={!city}>
+            <option value="">Chọn quận/huyện</option>
+            {city && cityData.find(item => item.name === city)?.districts.map(districtItem => (
+              <option key={districtItem.name} value={districtItem.name}>{districtItem.name}</option>
+            ))}
+          </select>
         </div>
 
         <div className="input-group">
-          <label>Phone Number</label>
+          <label>Phường/Xã</label>
+          <select value={ward} onChange={(e) => setWard(e.target.value)} disabled={!district}>
+            <option value="">Chọn phường/xã</option>
+            {district && cityData.find(item => item.name === city)?.districts.find(item => item.name === district)?.wards.map(wardItem => (
+              <option key={wardItem} value={wardItem}>{wardItem}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="input-group">
+          <label>Số Điện Thoại</label>
           <input
             type="text"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            placeholder="Phone Number"
+            placeholder="Phone"
           />
-        </div>
-
-        <div className="input-group">
-          <label>Payment Method</label>
-          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-            <option value="">Select Payment Method</option>
-            {paymentMethods.map((method) => (
-              <option key={method._id} value={method._id}>
-                {method.method}
-              </option>
-            ))}
-          </select>
         </div>
 
         <button type="submit" className="submit-btn">
@@ -170,20 +161,25 @@ const ShippingAddressForm = () => {
       </form>
 
       <div className="saved-addresses">
-        <h3>Saved Addresses</h3>
+        <h3>Danh sách thông tin</h3>
         <div className="addresses-list">
           {shippingAddresses.map((address) => (
             <div key={address._id} className="address-card">
               <p>
                 {`${address.address}, ${address.city}, ${address.district}, ${address.ward}, ${address.phoneNumber}`}
               </p>
-              <p>Payment Method: {address.paymentMethod?.method || 'N/A'}</p>
               <div className="action-buttons">
                 <button className="edit-btn" onClick={() => handleEdit(address)}>
                   Edit
                 </button>
                 <button className="delete-btn" onClick={() => handleDelete(address._id)}>
                   Delete
+                </button>
+                <button
+                  className="navigate-order-btn"
+                  onClick={() => navigate('/order', { state: { cartItems, address: address } })} // Truyền cả cartItems và address
+                >
+                  Đi đến trang Đơn Hàng
                 </button>
               </div>
             </div>
@@ -195,4 +191,3 @@ const ShippingAddressForm = () => {
 };
 
 export default ShippingAddressForm;
-          

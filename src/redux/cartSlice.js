@@ -15,7 +15,7 @@ const loadCartFromLocalStorage = () => {
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        items: loadCartFromLocalStorage(), // Lấy giỏ hàng từ localStorage khi ứng dụng khởi động
+        items: loadCartFromLocalStorage(), 
         total: 0,
     },
     reducers: {
@@ -26,9 +26,7 @@ const cartSlice = createSlice({
             } else {
                 state.items.push({ ...action.payload, quantity: 1 });
             }
-            // Cập nhật tổng tiền giỏ hàng
             state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
-            // Lưu giỏ hàng vào localStorage
             localStorage.setItem('cart', JSON.stringify(state.items));
         },
         removeFromCart: (state, action) => {
