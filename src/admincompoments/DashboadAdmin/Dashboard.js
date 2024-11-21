@@ -10,6 +10,7 @@ import './Dashboard.css';
 import { logOut } from '../../redux/apiRequest';
 import { createAxios } from '../../createInstance';
 import { logOutSuccess } from '../../redux/authSlice';
+import AdminPaymentMethodForm from '../AdminPaymentMethodForm/AdminPaymentMethodForm';
 
 
 const Dashboard = () => {
@@ -37,6 +38,8 @@ const Dashboard = () => {
                 return <AdminDealsManager />;
             case 'userlist':
                 return <UserList/>;
+            case 'AdminPaymentMethodForm':
+                return <AdminPaymentMethodForm/>;
             case 'category':
                 return <CategoryPage />;
             default:
@@ -69,6 +72,7 @@ const Dashboard = () => {
                         <li onClick={() => setSelectedCategory('userlist')}>Tài khoản User</li>
                         <li onClick={() => setSelectedCategory('category')}>Loại hàng</li>
                         <li onClick={() => setSelectedCategory('cart')}>Giỏ hàng</li>
+                        <li onClick={() => setSelectedCategory('AdminPaymentMethodForm')}>Phương Thức Thanh Toán</li>
                     </ul>
                 </nav>
                 <div className="admin-dashboard-content">

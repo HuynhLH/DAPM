@@ -4,7 +4,6 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     viewedProducts: [],
 };
-
 const viewedProductsSlice = createSlice({
     name: 'viewedProducts',
     initialState,
@@ -20,6 +19,7 @@ const viewedProductsSlice = createSlice({
         },
     },
 });
+
 
 export const { addViewedProduct, removeViewedProduct } = viewedProductsSlice.actions;
 export default viewedProductsSlice.reducer;

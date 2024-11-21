@@ -12,7 +12,6 @@ const reviewRoutes = require("./routes/reviewRoutes");
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const shippingRoutes = require('./routes/shippingRoutes');
-const recentlyViewedRoutes = require('./routes/recentlyViewedRoutes');
 
 dotenv.config();
 const app = express();
@@ -33,7 +32,6 @@ app.use("/reviews", reviewRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment-methods', paymentRoutes);
 app.use('/api/shipping-addresses', shippingRoutes);
-app.use('/api', recentlyViewedRoutes);
 
 // Khởi chạy server
 const PORT = 5000;

@@ -4,17 +4,17 @@ const orderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     items: [
         {
-            product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' }, // Sản phẩm thông thường
-            deal: { type: mongoose.Schema.Types.ObjectId, ref: 'Deal' },     // Sản phẩm khuyến mãi
-            quantity: { type: Number, required: true }, // Số lượng sản phẩm
+            product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+            deal: { type: mongoose.Schema.Types.ObjectId, ref: 'Deal' },     
+            quantity: { type: Number, required: true }, 
         }
     ],
-    shippingAddress: { type: mongoose.Schema.Types.ObjectId, ref: 'ShippingAddress', required: true }, // Địa chỉ nhận hàng
-    paymentMethod: { type: mongoose.Schema.Types.ObjectId, ref: 'PaymentMethod', required: true },     // Hình thức thanh toán
+    shippingAddress: { type: mongoose.Schema.Types.ObjectId, ref: 'ShippingAddress', required: true }, 
+    paymentMethod: { type: mongoose.Schema.Types.ObjectId, ref: 'PaymentMethod', required: true },     
     totalPrice: { type: Number, required: true }, 
     status: { 
         type: String, 
-        enum: ['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'], // Trạng thái đơn hàng
+        enum: ['Pending', 'Processing', 'Shipped', 'Completed', 'Cancelled'],
         default: 'Pending' 
     },
 }, { timestamps: true });

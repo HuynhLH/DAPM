@@ -10,7 +10,7 @@ import productDetailReducer from './productDetailSlice';
 import cartReducer from './cartSlice';
 import shippingAddressReducer from './shippingSlice';
 import orderReducer from './orderSlice';
-import paymentReducer from './paymentSlice';
+import paymentMethodReducer from './paymentMethodSlice';
 
 
 
@@ -27,6 +27,7 @@ export default configureStore({
         cart: cartReducer,
         shippingAddress: shippingAddressReducer,
         order: orderReducer,
-        payment: paymentReducer,
+        paymentMethods: paymentMethodReducer,
+
     },
 });
