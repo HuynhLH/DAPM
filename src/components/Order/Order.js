@@ -10,12 +10,16 @@ const Order = () => {
   const user = useSelector((state) => state.auth.login.currentUser);
   const dispatch = useDispatch();
 
-  const { cartItems, selectedShippingAddress, selectedPaymentMethod } = location.state || { cartItems: [], selectedShippingAddress: null, selectedPaymentMethod: null };
+  const { cartItems, selectedShippingAddress, selectedPaymentMethod } = location.state || { 
+    cartItems: [], 
+    selectedShippingAddress: null, 
+    selectedPaymentMethod: null 
+  };
 
   const [orderData, setOrderData] = useState({
     items: cartItems,
     shippingAddress: selectedShippingAddress,
-    paymentMethod: selectedPaymentMethod, // Store payment method here as well
+    paymentMethod: selectedPaymentMethod,
   });
 
   const handleCreateOrder = (e) => {
@@ -27,6 +31,14 @@ const Order = () => {
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
+  const handleChangeAddress = () => {
+    navigate('/shipping', { state: { fromOrderPage: true } });
+  };
+
+  const handleChangePayment = () => {
+    navigate('/shipping', { state: { fromOrderPage: true } });
+  };
+
   return (
     <div className="order-container">
       <h1 className="order-title">Xác Nhận Đơn Hàng</h1>
@@ -36,15 +48,15 @@ const Order = () => {
         <h2 className="hh">Địa chỉ nhận hàng</h2>
         <p>{selectedShippingAddress?.phoneNumber}</p>
         <p>{selectedShippingAddress?.address}, {selectedShippingAddress?.district}, {selectedShippingAddress?.ward}, {selectedShippingAddress?.city}</p>
+        <button className="change-button" onClick={handleChangeAddress}>Thay đổi</button>
       </div>
 
-{/* Payment Method Section */}
-<div className="payment-method">
-  <h2 className="hh">Phương thức thanh toán</h2>
-  <p>{selectedPaymentMethod ? `Phương thức: ${selectedPaymentMethod.method} : ${selectedPaymentMethod.description}` : 'Chưa chọn phương thức thanh toán'}</p>
-</div>
-
-
+      {/* Payment Method Section */}
+      <div className="payment-method">
+        <h2 className="hh">Phương thức thanh toán</h2>
+        <p>{selectedPaymentMethod ? `Phương thức: ${selectedPaymentMethod.method} : ${selectedPaymentMethod.description}` : 'Chưa chọn phương thức thanh toán'}</p>
+        <button className="change-button" onClick={handleChangePayment}>Thay đổi</button>
+      </div>
 
       {/* Order Items Section */}
       <div className="order-items">
@@ -53,7 +65,7 @@ const Order = () => {
           {cartItems.map((item) => (
             <li key={item.id} className="order-item">
               <img src={item.image_url} alt={item.name} />
-              <p>{item.name}{item.Name}</p>
+              <p>{item.name}</p>
               <p>{item.quantity} x {item.price.toLocaleString('vi-VN')} đ</p>
             </li>
           ))}

@@ -145,3 +145,70 @@ input[type="text"]:focus, input[type="password"]:focus, select:focus {
     background-color: #2b69d4;
     transform: translateY(-3px) scale(1.05);
 }
+.change-button {
+  background-color: #ff9800; 
+  color: #ffffff; 
+  border: none; 
+  border-radius: 5px; 
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+}
+
+.change-button:hover {
+  background-color: #e67e22; 
+}
+
+.change-button:active {
+  background-color: #d35400; 
+}
+
+.change-button:focus {
+  outline: 2px solid #ff9800; 
+  outline-offset: 2px; 
+}
+.change-button {
+    position: relative;
+    background-color: #11ae62; 
+    color: #ffffff; 
+    border: none;
+    border-radius: 30px; 
+    padding: 10px 20px;
+    font-size: 16px; 
+    font-weight: bold; 
+    cursor: pointer;
+    overflow: hidden; 
+    transition: all 0.3s ease-in-out; 
+    box-shadow: 0 4px 10px rgba(5, 80, 53, 0.4); 
+  }
+  
+  .change-button::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease-out;
+    border-radius: 50%;
+  }
+  
+  .change-button:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  
+  .change-button:hover {
+    background-color: #19cc73; 
+    box-shadow: 0 6px 15px rgba(19, 174, 86, 0.6); 
+    transform: translateY(-2px); 
+  }
+  
+  .change-button:active {
+    transform: translateY(2px); 
+    box-shadow: 0 2px 5px rgba(13, 70, 32, 0.4); 
+  }
+  
