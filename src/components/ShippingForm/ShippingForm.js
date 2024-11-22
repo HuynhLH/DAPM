@@ -7,6 +7,7 @@ import {
   deleteShippingAddress, 
   getShippingAddresses 
 } from '../../redux/shippingSlice';
+import { fetchPaymentMethods } from '../../redux/paymentMethodAction';
 import { cityData } from '../CITYDATA/CityData'; 
 import './ShippingForm.css'; 
 
@@ -16,23 +17,36 @@ const ShippingAddressForm = () => {
   const [district, setDistrict] = useState('');
   const [ward, setWard] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [selectedAddress, setSelectedAddress] = useState(null);
-
+  const [selectedShippingAddress, setSelectedShippingAddress] = useState(null);
   
+
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
 
-  const user = useSelector((state) => state.auth?.login?.currentUser  );
+  const user = useSelector((state) => state.auth?.login?.currentUser);
   const shippingAddresses = useSelector((state) => state.shippingAddress?.shippingAddresses || []);
+  const paymentMethods = useSelector((state) => state.paymentMethod?.paymentMethods || []);
   const loading = useSelector((state) => state.shippingAddress?.loading);
   const error = useSelector((state) => state.shippingAddress?.error);
   const cartItems = useSelector((state) => state.cart.items);
+  
+
+
+  const getPaymentMethods = async () => {
+    console.log("Fetching payment methods...");
+    await fetchPaymentMethods(dispatch); 
+    console.log("Payment methods fetched.");
+  };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if (user) {
       dispatch(getShippingAddresses(user._id));
     }
+    getPaymentMethods();
   }, [user, dispatch]);
 
   const handleSubmit = (e) => {
@@ -64,11 +78,11 @@ const ShippingAddressForm = () => {
         });
     } else {
       dispatch(createShippingAddress(newAddress)).then(() => {
-        navigate('/order', { state: { cartItems, shippingAddresses: newAddress } });
         resetForm();
     });
     }
-};
+  };
+
   const handleEdit = (address) => {
     setAddress(address.address);
     setCity(address.city);
@@ -96,11 +110,86 @@ const ShippingAddressForm = () => {
     setPhoneNumber('');
     setIsEditing(false);
     setSelectedAddress(null);
+    setSelectedPaymentMethod(''); // Reset payment method
   };
+
+  const handlePlaceOrder = () => {
+    if (!selectedShippingAddress || !selectedPaymentMethod) {
+      alert("Vui lòng chọn địa chỉ và phương thức thanh toán.");
+      return;
+    }
+    const selectedMethod = paymentMethods.find(method => method._id === selectedPaymentMethod);
+    if (!selectedMethod) {
+      alert("Invalid payment method.");
+      return;
+    }
+    console.log(selectedPaymentMethod);  
+    navigate('/order', { 
+      state: { 
+        cartItems, 
+        selectedShippingAddress, 
+        selectedPaymentMethod: selectedMethod,
+      } 
+    });
+  };
+  const handleSelectAddress = (address) => {
+    // Nếu địa chỉ đang được chọn, hủy chọn
+    if (selectedShippingAddress && selectedShippingAddress._id === address._id) {
+      setSelectedShippingAddress(null);
+    } else {
+      setSelectedShippingAddress(address); // Lưu địa chỉ vào selectedShippingAddress
+    }
+  };
+  
 
   return (
     <div className="shipping-form-container">
       {error && <div className="error-message">{error}</div>}
+
+      <div className="form-container">
+        {/* Khung bên trái: Danh sách địa chỉ */}
+        <div className="address-list">
+          <h3>Danh Sách Địa Chỉ</h3>
+          {shippingAddresses.map((address) => (
+            <div key={address._id} className="address-card">
+              <p>{`${address.address}, ${address.city}, ${address.district}, ${address.ward}, ${address.phoneNumber}`}</p>
+              <div className="action-buttons">
+                <button className="edit-btn" onClick={() => handleEdit(address)}>
+                  Chỉnh Sửa
+                </button>
+                <button className="delete-btn" onClick={() => handleDelete(address._id)}>
+                  Xóa
+                </button>
+              </div>
+              <button onClick={() => handleSelectAddress(address)}>
+  {selectedShippingAddress && selectedShippingAddress._id === address._id ? 'Đã Chọn' : 'Chọn Địa Chỉ'}
+</button>
+
+            </div>
+          ))}
+        </div>
+
+        {/* Khung bên phải: Phương thức thanh toán */}
+        <div className="payment-method-container">
+          <h3>Chọn Phương Thức Thanh Toán</h3>
+          <select 
+            value={selectedPaymentMethod} 
+            onChange={(e) => setSelectedPaymentMethod(e.target.value)} 
+            required
+          >
+            <option value="">Chọn phương thức thanh toán</option>
+            {paymentMethods.map((method) => (
+              <option key={method._id} value={method._id}>
+                {method.method}: {method.description}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <button onClick={handlePlaceOrder} className="place-order-btn">
+        Đặt Hàng
+      </button>
 
       <form className="shipping-form" onSubmit={handleSubmit}>
         <h2>{isEditing ? 'Update Shipping Address' : 'Add Shipping Address'}</h2>
@@ -159,33 +248,6 @@ const ShippingAddressForm = () => {
           {isEditing ? 'Update Address' : 'Add Address'}
         </button>
       </form>
-
-      <div className="saved-addresses">
-        <h3>Danh sách thông tin</h3>
-        <div className="addresses-list">
-          {shippingAddresses.map((address) => (
-            <div key={address._id} className="address-card">
-              <p>
-                {`${address.address}, ${address.city}, ${address.district}, ${address.ward}, ${address.phoneNumber}`}
-              </p>
-              <div className="action-buttons">
-                <button className="edit-btn" onClick={() => handleEdit(address)}>
-                  Edit
-                </button>
-                <button className="delete-btn" onClick={() => handleDelete(address._id)}>
-                  Delete
-                </button>
-                <button
-                  className="navigate-order-btn"
-                  onClick={() => navigate('/order', { state: { cartItems, address: address } })} // Truyền cả cartItems và address
-                >
-                  Đi đến trang Đơn Hàng
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

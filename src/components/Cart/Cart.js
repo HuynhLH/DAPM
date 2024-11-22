@@ -19,6 +19,7 @@ const Cart = () => {
         return cart ? JSON.parse(cart) : [];
       };
       useEffect(() => {
+        window.scrollTo(0, 0);
         localStorage.setItem('cart', JSON.stringify(cartItems)); 
       }, [cartItems]);
 

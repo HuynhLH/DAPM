@@ -20,7 +20,7 @@ export const fetchReviews = createAsyncThunk(
 export const addReview = createAsyncThunk('reviews/addReview', async (reviewData, { rejectWithValue }) => {
   try {
     const response = await axios.post('http://localhost:5000/reviews', reviewData); // reviewData chứa userId, itemId, itemType, rating, comment
-    return response.data.review; // Trả về review mới được thêm
+    return response.data.review;
   } catch (error) {
     return rejectWithValue(error.response ? error.response.data : error.message);
   }
@@ -30,7 +30,7 @@ export const addReview = createAsyncThunk('reviews/addReview', async (reviewData
 export const deleteReview = createAsyncThunk('reviews/deleteReview', async (reviewData, { rejectWithValue }) => {
   try {
     const response = await axios.delete('http://localhost:5000/reviews/delete', { data: reviewData }); // reviewData chứa reviewId và userId
-    return reviewData.reviewId; // Trả về ID của review vừa xóa
+    return reviewData.reviewId; 
   } catch (error) {
     return rejectWithValue(error.response ? error.response.data : error.message);
   }

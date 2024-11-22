@@ -1,41 +1,153 @@
 /* ShippingForm.css */
 
+/* General container for the form */
 .shipping-form-container {
   width: 90%;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
 }
 
-.shipping-form h2 {
+/* Heading for the entire section */
+.shipping-form-container h2 {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #333;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  font-weight: 600;
 }
 
-.input-group {
+/* Styling for error messages */
+.error-message {
+  color: red;
+  font-size: 1.2rem;
   margin-bottom: 15px;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
 }
 
-.input-group label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  display: block;
+/* Flex container for two sections (Address List & Payment Method) */
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+/* Address list section */
+.address-list {
+  width: 45%;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.address-list h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* Individual address card */
+.address-card {
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.address-card:hover {
+  transform: scale(1.05);
+  background: #e9f7fe;
+}
+
+.address-card p {
+  margin: 0;
+  font-size: 1rem;
   color: #555;
 }
 
+/* Payment method section */
+.payment-method-container {
+  width: 45%;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.payment-method-container h3 {
+  font-size: 1.6rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+/* Payment method dropdown */
+.payment-method-container select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.payment-method-container select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Styling for the button */
+.place-order-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.place-order-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Form styling */
+.shipping-form {
+  margin-top: 30px;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Input and select styling */
 .input-group input,
 .input-group select {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 12px;
   border-radius: 5px;
+  border: 1px solid #ddd;
   font-size: 1rem;
-  transition: border-color 0.3s;
+  color: #555;
+  transition: border-color 0.3s ease;
 }
 
 .input-group input:focus,
@@ -44,92 +156,131 @@
   outline: none;
 }
 
+/* Label styling */
+.input-group label {
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
+  display: block;
+}
+
+/* Button styling inside the form */
 .submit-btn {
   width: 100%;
-  padding: 12px;
+  padding: 15px;
   background-color: #007bff;
+  color: #fff;
+  font-size: 1.2rem;
   border: none;
   border-radius: 5px;
-  font-size: 1.2rem;
-  color: white;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
   background-color: #0056b3;
 }
 
-.saved-addresses {
-  margin-top: 30px;
+/* Animation for form elements */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.addresses-list {
-  margin-top: 10px;
+.shipping-form-container {
+  animation: fadeIn 0.8s ease-out;
+}
+/* Add a border or background to highlight the selected address */
+.selected-address {
+  background-color: #f0f8ff;  /* Light blue background for the selected address */
+  border: 2px solid #007bff;  /* Blue border to highlight */
 }
 
+/* Styling for the action buttons */
 .address-card {
-  background: #f9f9f9;
-  padding: 15px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 15px;
-  transition: transform 0.2s;
+  background-color: #fff;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .address-card:hover {
-  transform: scale(1.02);
+  background-color: #f9f9f9; /* Slightly darker background on hover */
+  transform: scale(1.02);  /* Slightly enlarge the card on hover */
 }
 
-.action-buttons {
-  margin-top: 10px;
-}
-
-.edit-btn, .delete-btn {
-  padding: 8px 12px;
+.action-buttons button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
 }
 
-.edit-btn {
-  background-color: #ffc107;
-  color: #fff;
-  margin-right: 10px;
+.action-buttons .edit-btn {
+  background-color: #4CAF50;
+  color: white;
 }
 
-.edit-btn:hover {
-  background-color: #e0a800;
+.action-buttons .edit-btn:hover {
+  background-color: #45a049;
 }
 
-.delete-btn {
-  background-color: #dc3545;
-  color: #fff;
+.action-buttons .delete-btn {
+  background-color: #f44336;
+  color: white;
 }
 
-.delete-btn:hover {
-  background-color: #c82333;
+.action-buttons .delete-btn:hover {
+  background-color: #e53935;
 }
 
-.error-message {
-  color: red;
-  font-size: 1rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-.navigate-order-btn {
-  margin-top: 20px;
-  padding: 10px 15px;
+.address-card button {
+  padding: 0.5rem 1rem;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
+  margin-left: 10px;
 }
 
-.navigate-order-btn:hover {
+.address-card button:hover {
+  background-color: #0056b3;
+}
+
+/* Add styling for the form */
+.shipping-form .input-group input,
+.shipping-form .input-group select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Styling for the submit button */
+.submit-btn {
+  padding: 1rem 2rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
   background-color: #0056b3;
 }
