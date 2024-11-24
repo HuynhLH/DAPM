@@ -11,6 +11,7 @@ import { logOut } from '../../redux/apiRequest';
 import { createAxios } from '../../createInstance';
 import { logOutSuccess } from '../../redux/authSlice';
 import AdminPaymentMethodForm from '../AdminPaymentMethodForm/AdminPaymentMethodForm';
+import AdminPaymentHistory from '../adminpayment';
 
 
 const Dashboard = () => {
@@ -42,6 +43,8 @@ const Dashboard = () => {
                 return <AdminPaymentMethodForm/>;
             case 'category':
                 return <CategoryPage />;
+            case 'adminpayment':
+                return <AdminPaymentHistory/>
             default:
                 return null;
         }
@@ -71,7 +74,7 @@ const Dashboard = () => {
                         <li onClick={() => setSelectedCategory('deals')}>Deals</li>
                         <li onClick={() => setSelectedCategory('userlist')}>Tài khoản User</li>
                         <li onClick={() => setSelectedCategory('category')}>Loại hàng</li>
-                        <li onClick={() => setSelectedCategory('cart')}>Giỏ hàng</li>
+                        <li onClick={() => setSelectedCategory('adminpayment')}>Lịch sử thanh toán</li>
                         <li onClick={() => setSelectedCategory('AdminPaymentMethodForm')}>Phương Thức Thanh Toán</li>
                     </ul>
                 </nav>

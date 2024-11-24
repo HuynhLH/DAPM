@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDeals, createDeal, updateDeal, deleteDeal } from '../../redux/dealSlice';
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 import axios from 'axios';
 import './AdminDealsManager.css'; 
 
@@ -28,6 +30,7 @@ const AdminDealsManager = () => {
     useEffect(() => {
         dispatch(fetchDeals());
         fetchCategories();
+        checkDealsExpiration();
     }, [dispatch]);
 
     const fetchCategories = async () => {
@@ -42,7 +45,25 @@ const AdminDealsManager = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewDeal((prev) => ({ ...prev, [name]: value }));
+        
+        // Recalculate the discounted price when price or discount changes
+        if (name === "discount" || name === "price") {
+            const discount = parseFloat(newDeal.discount) || 0;
+            const price = parseFloat(newDeal.price) || 0;
+            const discountedPrice = price - (price * discount) / 100;
+            setNewDeal((prev) => ({ ...prev, discountedPrice: discountedPrice.toFixed(2) }));
+        }
     };
+    
+    
+    
+    const handleDateChange = (date, field) => {
+        if (field === "startDate") {
+          setNewDeal((prev) => ({ ...prev, startDate: date }));
+        } else if (field === "endDate") {
+          setNewDeal((prev) => ({ ...prev, endDate: date }));
+        }
+      };      
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -98,6 +119,15 @@ const AdminDealsManager = () => {
         setEditMode(false);
         setEditDealId('');
     };
+    const checkDealsExpiration = () => {
+        const today = new Date();
+        deals.forEach((deal) => {
+          if (new Date(deal.endDate) < today && deal.discount) {
+            dispatch(updateDeal({ id: deal._id, dealData: { ...deal, discount: 0 } }));
+          }
+        });
+      };
+
 
     return (
         <div className="admin-deals-manager">
@@ -118,15 +148,15 @@ const AdminDealsManager = () => {
                     value={newDeal.description} 
                     onChange={handleChange} 
                 />
-                <input 
-                    className="admin-deal-input" 
-                    name="price" 
-                    type="number" 
-                    placeholder="Giá" 
-                    value={newDeal.price} 
-                    onChange={handleChange} 
-                    required 
-                />
+                <input
+          className="admin-deal-input"
+          name="price"
+          type="number"
+          placeholder="Giá"
+          value={newDeal.price}
+          onChange={handleChange}
+          required
+        />
                 <input 
                     className="admin-deal-input" 
                     name="image_url" 
@@ -134,32 +164,31 @@ const AdminDealsManager = () => {
                     value={newDeal.image_url} 
                     onChange={handleChange} 
                 />
-                <input 
-                    className="admin-deal-input" 
-                    name="discount" 
-                    type="number" 
-                    placeholder="Giảm giá (%)" 
-                    value={newDeal.discount} 
-                    onChange={handleChange} 
-                />
-                <input 
-                    className="admin-deal-input" 
-                    name="startDate" 
-                    type="date" 
-                    placeholder="Ngày bắt đầu" 
-                    value={newDeal.startDate} 
-                    onChange={handleChange} 
-                    required 
-                />
-                <input 
-                    className="admin-deal-input" 
-                    name="endDate" 
-                    type="date" 
-                    placeholder="Ngày kết thúc" 
-                    value={newDeal.endDate} 
-                    onChange={handleChange} 
-                    required 
-                />
+                <input
+          className="admin-deal-input"
+          name="discount"
+          type="number"
+          placeholder="Giảm giá (%)"
+          value={newDeal.discount}
+          onChange={handleChange}
+        />
+        <p className="discounted-price">{newDeal.discountedPrice ? newDeal.discountedPrice : newDeal.price} ₫
+</p>
+
+        <DatePicker
+          selected={newDeal.startDate}
+          onChange={(date) => handleDateChange(date, "startDate")}
+          placeholderText="Ngày bắt đầu"
+          minDate={new Date()}
+          dateFormat="dd/MM/yyyy"
+        />
+        <DatePicker
+          selected={newDeal.endDate}
+          onChange={(date) => handleDateChange(date, "endDate")}
+          placeholderText="Ngày kết thúc"
+          minDate={newDeal.startDate}
+          dateFormat="dd/MM/yyyy"
+        />
                 <input 
                     className="admin-deal-input" 
                     name="brand" 
@@ -212,13 +241,13 @@ const AdminDealsManager = () => {
                     Hoạt động
                 </label>
                 <button className="admin-deal-button" type="submit" disabled={loading}>
-                    {editMode ? 'Cập nhật' : 'Thêm'}
-                </button>
-                {editMode && (
-                    <button type="button" className="admin-deal-cancel-button" onClick={resetForm}>
-                        Hủy
-                    </button>
-                )}
+          {editMode ? "Cập nhật" : "Thêm"}
+        </button>
+        {editMode && (
+          <button type="button" className="admin-deal-cancel-button" onClick={resetForm}>
+            Hủy
+          </button>
+        )}
             </form>
 
             <h2 className="admin-deals-list-title">Danh sách Deals</h2>
@@ -226,18 +255,25 @@ const AdminDealsManager = () => {
                 <p>Đang tải...</p>
             ) : (
                 <ul className="admin-deals-list">
-                    {deals.map(deal => (
-                        <li className="admin-deal-item" key={deal._id}>
-                            <h3 className="admin-deal-name">{deal.name}</h3>
-                            <p className="admin-deal-price">Giá: {deal.price} ₫</p>
-                            <p className="admin-deal-discount">Giảm giá: {deal.discount || 0} %</p>
-                            <p className="admin-deal-dates">Thời gian: {deal.startDate} đến {deal.endDate}</p>
-                            <p className="admin-deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
-                            <button onClick={() => handleEdit(deal)} className="admin-deal-edit-button">Sửa</button>
-                            <button onClick={() => handleDelete(deal._id)} className="admin-deal-delete-button">Xóa</button>
-                        </li>
-                    ))}
-                </ul>
+    {deals.map(deal => {
+        // Calculate the discounted price outside JSX
+        const discountedPrice = deal.discount ? deal.price - (deal.price * deal.discount) / 100 : deal.price;
+
+        return (
+            <li className="admin-deal-item" key={deal._id}>
+                <h3 className="admin-deal-name">{deal.name}</h3>
+                <p className="admin-deal-price">Giá: {deal.price} ₫</p>
+                <p className="admin-deal-discount">Giảm giá: {deal.discount || 0} %</p>
+                <p className="admin-deal-discounted-price">{discountedPrice} ₫</p>
+                <p className="admin-deal-dates">Thời gian:{deal.startDate} đến {deal.endDate}</p>
+                <p className="admin-deal-status">Tình trạng:{deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
+                <button onClick={() => handleEdit(deal)} className="admin-deal-edit-button">Sửa</button>
+                <button onClick={() => handleDelete(deal._id)} className="admin-deal-delete-button">Xóa</button>
+            </li>
+        );
+    })}
+</ul>
+
             )}
             {error && <p className="error-message">{error}</p>} 
         </div>

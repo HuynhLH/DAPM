@@ -111,16 +111,21 @@ const DealsPage = () => {
 
                 {/* Deals Container */}
                 <div className="deals-container">
-                    {sortedDeals.map(deal => (
-                        <div className="deal-card" key={deal._id} onClick={() => handleDealClick(deal)}>
-                            <img src={deal.image_url} alt={deal.name} className="deal-image" />
-                            <h3 className="deal-name">{deal.name}</h3>
-                            <p className="deal-price">Giá: {deal.price.toLocaleString('vi-VN')} VND</p>
-                            <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
-                            <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
-                        </div>
-                    ))}
-                </div>
+    {sortedDeals.map(deal => {
+        const discountedPrice = deal.discount ? deal.price - (deal.price * deal.discount) / 100 : deal.price;
+        return (
+            <div className="deal-card" key={deal._id} onClick={() => handleDealClick(deal)}>
+                <img src={deal.image_url} alt={deal.name} className="deal-image" />
+                <h3 className="deal-name">{deal.name}</h3>
+                <p className="deal-price">Giá: {deal.price.toLocaleString('vi-VN')} VND</p>
+                <p className="admin-deal-discounted-price">Giá sau khi giảm: {discountedPrice.toLocaleString('vi-VN')} VND</p>
+                <p className="deal-discount">Giảm giá: {deal.discount || 0} %</p>
+                <p className="deal-status">Tình trạng: {deal.isActive ? 'Đang hoạt động' : 'Ngưng hoạt động'}</p>
+            </div>
+        );
+    })}
+</div>
+
             </div>
         </div>
     );

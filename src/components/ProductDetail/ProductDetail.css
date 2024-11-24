@@ -95,4 +95,47 @@
     color: #555;
 }
 
-/* Product Reviews Container */
+.product-detail-goback {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #ff6b6b; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .product-detail-goback:hover {
+    background-color: #ff4747; 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); 
+    transform: translateY(-3px); 
+  }
+  
+  .product-detail-goback:active {
+    background-color: #e63939;
+    transform: translateY(1px); 
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+  }
+.product-info {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+
+  .product-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .product-discounted-price {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #e74c3c; 
+    margin-top: 10px;
+  }
+  

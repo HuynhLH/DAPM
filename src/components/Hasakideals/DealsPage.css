@@ -127,3 +127,25 @@
 .huynh{
     color:#333 ;
 }
+.admin-deal-discounted-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #d9534f; 
+    margin-top: 10px;
+}
+
+.admin-deal-discounted-price::before {
+    font-size: 1rem;
+    color: #333; 
+}
+
+.deal-price {
+    text-decoration: line-through; 
+    color: #888; 
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+.deal-price span {
+    font-size: 0.9rem;
+    color: #888;
+}

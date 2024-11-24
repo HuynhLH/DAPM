@@ -171,6 +171,32 @@ app.post("/transaction-status",async (req,res)=>{
     return res.status(200).json(result.data);
 })
 
+
+// Route cho User để lấy thông tin thanh toán của mình
+app.get("/api/payment-status/:orderId", async (req, res) => {
+    const { orderId } = req.params;
+    try {
+        const payment = await PaymentMD.findOne({ orderId });
+        if (!payment) {
+            return res.status(404).json({ message: "Payment not found" });
+        }
+        return res.status(200).json(payment);
+    } catch (error) {
+        return res.status(500).json({ message: "Error fetching payment status" });
+    }
+});
+
+
+// Route cho Admin để lấy tất cả thông tin thanh toán
+app.get("/api/admin/payment-history", async (req, res) => {
+    try {
+        const payments = await PaymentMD.find().populate('orderId'); // Nếu bạn muốn bao gồm thông tin đơn hàng liên quan
+        return res.status(200).json(payments);
+    } catch (error) {
+        return res.status(500).json({ message: "Error fetching payment history" });
+    }
+});
+
 // Khởi chạy server
 const PORT = 5000;
 app.listen(PORT, () => {

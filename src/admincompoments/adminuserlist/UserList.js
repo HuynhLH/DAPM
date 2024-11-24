@@ -16,7 +16,7 @@ const UserList = () => {
                 console.error("Error fetching users:", error);
             });
         }
-    }, [accessToken, dispatch]);
+    }, [accessToken, dispatch,]);
 
     const handleDelete = (userId) => {
         if (window.confirm("Bạn có chắc chắn muốn xóa người dùng này?")) {

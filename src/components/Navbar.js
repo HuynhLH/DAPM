@@ -1,13 +1,15 @@
 // src/components/Navbar.js
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './Navbar.css';
-import { useEffect } from 'react';
+import { useEffect,useState  } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../redux/productSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick'; 
+import { useParams } from 'react-router-dom';
 
 const Navbar = () => {
+    const { orderId } = useParams();
     const dispatch = useDispatch();
     const products = useSelector(state => state.products.products);
     const navigate = useNavigate();
@@ -72,10 +74,6 @@ const Navbar = () => {
                         <h3>Sản Phẩm</h3>
                     </div>
                     </Link>
-                    <div className="promotion-card">
-                        <i className="fas fa-gift"></i>
-                        <h3>Đơn Hàng của Bạn</h3>
-                    </div>
                     <Link to="/guide">
                         <div className="promotion-card">
                             <i className="fas fa-book"></i>

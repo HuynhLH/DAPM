@@ -22,10 +22,10 @@ const RecentlyViewedPage = () => {
             <div className="viewed-products-list">
                 {viewedProducts.map((product) => (
                     <div key={product._id} className="viewed-product-item">
-                        <Link to={{ pathname: `/product/${product._id}`, state: { productData: product } }}>
+                        <p className='haha' >
                             <img src={product.image_url} alt={product.name} />
-                            <h3>{product.name}</h3>
-                        </Link>
+                            <h3>{product.name}{product.Name}</h3>
+                        </p>
                         <button 
                             className="delete-button" 
                             onClick={() => handleRemoveProduct(product._id)}

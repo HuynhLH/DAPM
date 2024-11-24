@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder } from '../../redux/orderSlice';
 import './Order.css';
+import axios from 'axios';
 
 const Order = () => {
   const location = useLocation();
@@ -22,12 +23,39 @@ const Order = () => {
     paymentMethod: selectedPaymentMethod,
   });
 
-  const handleCreateOrder = (e) => {
+  const handleCreateOrder = async (e) => {
     e.preventDefault();
-    dispatch(createOrder({ ...orderData, userId: user._id }));
-    setOrderData({ items: [], paymentMethod: '', shippingAddress: {} });
-    navigate('/order-success');
-  };
+    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    if (selectedPaymentMethod?.method === "MoMo") {
+        try {
+            const response = await axios.post("http://localhost:5000/payment", {
+                amount: total,
+                orderInfo: `Đặt hàng từ ${user.username}`,
+                items: cartItems,
+                paymentMethod: selectedPaymentMethod,
+            });
+
+            if (response.data && response.data.payUrl) {
+                window.location.href = response.data.payUrl;
+            } else {
+                console.error("Không nhận được URL thanh toán từ MoMo");
+            }
+        } catch (error) {
+            console.error("Lỗi khi thanh toán MoMo:", error);
+            alert("Có lỗi xảy ra trong quá trình thanh toán. Vui lòng thử lại.");
+        }
+    } else if (selectedPaymentMethod?.method === "COD") {
+        dispatch(createOrder({ ...orderData, userId: user._id }));
+        setOrderData({ items: [], paymentMethod: '', shippingAddress: {} });
+        navigate('/order-success');
+    } else {
+        alert("Chưa chọn phương thức thanh toán.");
+    }
+};
+
+
+
 
   const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 

@@ -60,7 +60,7 @@ export const deleteUser = async (id, accessToken, dispatch) => {
             headers: { token: `Bearer ${accessToken}` },
         });
         dispatch(deleteUserSuccess());
-        getAllUsers(accessToken, dispatch); 
+        await getAllUsers(accessToken, dispatch);
     } catch (error) {
         console.error("Lỗi khi xóa người dùng:", error.response ? error.response.data : error.message);
         dispatch(deleteUserFailed());

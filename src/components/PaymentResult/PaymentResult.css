@@ -1,0 +1,144 @@
+/* General styles for the PaymentResult component */
+.payment-result-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px 50px;
+    max-width: 600px;
+    text-align: center;
+    margin: 20px auto;
+    animation: fadeInPayment 1s ease-out;
+    transition: transform 0.3s ease-out;
+  }
+  
+  .payment-result-container:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Header style specific to PaymentResult */
+  .payment-result-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 20px;
+    animation: slideInPayment 0.8s ease-out;
+  }
+  
+  /* Success message styling */
+  .payment-result-success {
+    font-size: 1.6rem;
+    color: #38a169;
+    font-weight: 600;
+    margin-bottom: 20px;
+    animation: bounceInSuccess 1s ease-out;
+  }
+  
+  .payment-result-success::before {
+    content: '🎉 ';
+    font-size: 2.5rem;
+  }
+  
+  /* Failure message styling */
+  .payment-result-failure {
+    font-size: 1.6rem;
+    color: #e53e3e;
+    font-weight: 600;
+    margin-bottom: 20px;
+    animation: bounceInFailure 1s ease-out;
+  }
+  
+  .payment-result-failure::before {
+    content: '😢 ';
+    font-size: 2.5rem;
+  }
+  
+  /* Payment result message styling */
+  .payment-result-message {
+    font-size: 1.1rem;
+    color: #4a5568;
+    margin-top: 10px;
+    animation: fadeInMessage 1s ease-out;
+  }
+  
+  /* Link back to homepage */
+  .payment-result-back-link {
+    display: inline-block;
+    margin-top: 25px;
+    font-size: 1.2rem;
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  
+  .payment-result-back-link:hover {
+    color: #2b6cb0;
+  }
+  
+  /* Keyframe Animations */
+  
+  /* Fade-in animation for the container */
+  @keyframes fadeInPayment {
+    from {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Slide-in animation for the header */
+  @keyframes slideInPayment {
+    from {
+      transform: translateX(-50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Bounce-in animation for success message */
+  @keyframes bounceInSuccess {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Bounce-in animation for failure message */
+  @keyframes bounceInFailure {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.2);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  /* Fade-in animation for the result message */
+  @keyframes fadeInMessage {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

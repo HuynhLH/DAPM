@@ -1,24 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-// Tải giỏ hàng từ localStorage khi ứng dụng khởi động
 const loadCartFromLocalStorage = () => {
     try {
         const cart = localStorage.getItem('cart');
         return cart ? JSON.parse(cart) : [];
     } catch (e) {
-        console.error("Error loading cart from localStorage", e);
-        return [];  // Nếu có lỗi, trả về giỏ hàng rỗng
+        console.error("Lỗi khi tải giỏ hàng từ localStorage", e);
+        return []; 
     }
 };
 
-
+// Cart slice definition
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
         items: loadCartFromLocalStorage(), 
-        total: 0,
+        total: 0, 
     },
     reducers: {
+        // Add item to the cart
         addToCart: (state, action) => {
             const existingItem = state.items.find(item => item.id === action.payload.id);
             if (existingItem) {
@@ -27,24 +27,27 @@ const cartSlice = createSlice({
                 state.items.push({ ...action.payload, quantity: 1 });
             }
             state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+            // Update localStorage
             localStorage.setItem('cart', JSON.stringify(state.items));
         },
+        
         removeFromCart: (state, action) => {
             const index = state.items.findIndex(item => item.id === action.payload.id);
             if (index !== -1) {
                 const item = state.items[index];
                 state.total -= item.price * item.quantity;
-                state.items.splice(index, 1);
-                localStorage.setItem('cart', JSON.stringify(state.items)); // Lưu lại giỏ hàng
+                state.items.splice(index, 1); 
+                localStorage.setItem('cart', JSON.stringify(state.items)); 
             }
         },
+
         updateItemQuantity: (state, action) => {
             const { id, quantity } = action.payload;
             const item = state.items.find(item => item.id === id);
             if (item) {
                 item.quantity = quantity;
                 state.total = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
-                localStorage.setItem('cart', JSON.stringify(state.items)); // Lưu lại giỏ hàng
+                localStorage.setItem('cart', JSON.stringify(state.items));
             }
         },
         clearCart: (state) => {
@@ -56,9 +59,10 @@ const cartSlice = createSlice({
             const payload = action.payload || [];
             state.items = payload;
             state.total = payload.reduce((total, item) => total + item.price * item.quantity, 0);
-        }
+        },
     },
 });
 
 export const { addToCart, removeFromCart, clearCart, loadCart, updateItemQuantity } = cartSlice.actions;
+
 export default cartSlice.reducer;

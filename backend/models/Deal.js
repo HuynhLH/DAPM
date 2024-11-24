@@ -13,7 +13,6 @@ const dealSchema = new mongoose.Schema({
     colors: [{ type: String }],  
     sizes: [{ type: String }],   
     brand: { type: String }, 
-    tags: [{ type: String }]
 
 }, { timestamps: true });
 
