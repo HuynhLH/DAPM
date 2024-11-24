@@ -120,9 +120,6 @@ const Header = () => {
                 <Link to="/hotdeals" className='navbar-bottom-link'>
                     <i className='fas fa-fire'></i> Hot Deals
                 </Link>
-                <Link to="/uudai" className='navbar-bottom-link'>
-                    <i className='fas fa-tags'></i> Bán chạy
-                </Link>
                 <Link to="/produtcpage" className='navbar-bottom-link'>
                     <i className='fas fa-box'></i> Sản phẩm
                 </Link>

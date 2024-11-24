@@ -36,7 +36,6 @@ const Navbar = () => {
     const formatPrice = (price) => {
         return price.toLocaleString('vi-VN');
       };
-    
 
     return (
         <div className="navbar">
@@ -55,21 +54,27 @@ const Navbar = () => {
                 </Slider>
 
                 <div className="promotion-container">
+                <Link to="/deals">
                     <div className="promotion-card">
                         <i className="fas fa-star"></i>
-                        <h3>Bán chạy</h3>
+                        <h3>Hasaki Deal</h3>
                     </div>
+                    </Link>
+                    <Link to="/hotdeals">
                     <div className="promotion-card">
                         <i className="fas fa-clock"></i>
-                        <h3>Giao 2h</h3>
+                        <h3>Hot Deal</h3>
                     </div>
+                    </Link>
+                    <Link to="/produtcpage">
                     <div className="promotion-card">
                         <i className="fas fa-spray-can-sparkles"></i>
-                        <h3>Nước hoa chính hãng</h3>
+                        <h3>Sản Phẩm</h3>
                     </div>
+                    </Link>
                     <div className="promotion-card">
                         <i className="fas fa-gift"></i>
-                        <h3>Mua là có quà</h3>
+                        <h3>Đơn Hàng của Bạn</h3>
                     </div>
                     <Link to="/guide">
                         <div className="promotion-card">

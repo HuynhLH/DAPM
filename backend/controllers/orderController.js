@@ -60,6 +60,7 @@ const createOrder = async (req, res) => {
                 quantity: item.quantity,
                 price: price,
             };
+            
         }));        
       
 
@@ -70,7 +71,7 @@ const createOrder = async (req, res) => {
         const newOrder = new Order({
             user: userId,
             items: orderItems,
-            totalPrice: calculatedTotalPrice, // Sử dụng tổng số tiền đã tính toán
+            totalPrice: calculatedTotalPrice, 
             paymentMethod,
             shippingAddress,
             status: 'Pending',
@@ -89,8 +90,8 @@ const getOrdersByUser = async (req, res) => {
         const { userId } = req.params;
 
         const orders = await Order.find({ user: userId })
-            .populate('items.product') // Dữ liệu từ Product
-            .populate('items.deal');   // Dữ liệu từ Deal
+            .populate('items.product') 
+            .populate('items.deal');   
 
         res.status(200).json({ message: "Orders fetched successfully", orders });
     } catch (err) {
