@@ -21,6 +21,7 @@ import Order from './components/Order/Order';
 import ShippingForm from './components/ShippingForm/ShippingForm';
 import PaymentResult from './components/PaymentResult/PaymentResult';
 
+
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -31,127 +32,128 @@ function App() {
 
   return (
     <Elements stripe={stripePromise}>
-      <Router>  {/* Đảm bảo Router bao bọc toàn bộ Routes */}
-        <div>
-          <Routes>
+      <div>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <NoHeaderLayout>
+                <Login />
+              </NoHeaderLayout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <NoHeaderLayout>
+                <Register />
+              </NoHeaderLayout>
+            }
+          />
+          <Route
+            path="/support"
+            element={
+              <HeaderFooterlayout>
+                <Support />
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path="/recentlyviewpage"
+            element={
+              <HeaderFooterlayout>
+                <RecentlyViewedPage />
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path='/hotdeals'  
+            element={
+              <HeaderFooterlayout>
+                <HotDeals/>
+              </HeaderFooterlayout>
+            }
+          />
             <Route
-              path="/login"
+            path='/cart'
+            element={
+              <HeaderFooterlayout>
+                <Cart/>
+              </HeaderFooterlayout>
+            }
+          />
+                      <Route
+            path='/shipping'
+            element={
+              <HeaderFooterlayout>
+                <ShippingForm/>
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path='/order'
+            element={
+              <HeaderFooterlayout>
+                <Order/>
+              </HeaderFooterlayout>
+            }
+          />
+          <Route
+            path='/guide'
+            element={
+              <HeaderFooterlayout>
+                <Guide/>
+              </HeaderFooterlayout>
+            }
+          />
+          <Route path='payment-result' element={<NoHeaderLayout>
+          <PaymentResult/>
+          </NoHeaderLayout>}
+          />
+          <Route 
+            path="/deals" 
+            element={
+              <HeaderFooterlayout>
+                <DealsPage/>
+              </HeaderFooterlayout>
+            } 
+          />
+          <Route path='/product/:id'
+          element={
+            <HeaderFooterlayout>
+              <ProductDetail/>
+            </HeaderFooterlayout>
+          }
+          />
+          <Route
+          path='/produtcpage' element={
+            <HeaderFooterlayout>
+              <ProductPage/>
+            </HeaderFooterlayout>
+          }
+          />
+          <Route
+            path="/profile"
+            element={
+              <HeaderFooterlayout>
+                <Profile />
+              </HeaderFooterlayout>
+            }
+          />
+          {currentUser?.admin && (
+            <Route
+              path="/admin"
               element={
                 <NoHeaderLayout>
-                  <Login />
+                  <Dashboard />
                 </NoHeaderLayout>
               }
             />
-            <Route
-              path="/register"
-              element={
-                <NoHeaderLayout>
-                  <Register />
-                </NoHeaderLayout>
-              }
-            />
-            <Route
-              path="/support"
-              element={
-                <HeaderFooterlayout>
-                  <Support />
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path="/recentlyviewpage"
-              element={
-                <HeaderFooterlayout>
-                  <RecentlyViewedPage />
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/hotdeals'  
-              element={
-                <HeaderFooterlayout>
-                  <HotDeals/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/cart'
-              element={
-                <HeaderFooterlayout>
-                  <Cart/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/shipping'
-              element={
-                <HeaderFooterlayout>
-                  <ShippingForm/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/order'
-              element={
-                <HeaderFooterlayout>
-                  <Order/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/guide'
-              element={
-                <HeaderFooterlayout>
-                  <Guide/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route path='payment-result' element={<NoHeaderLayout> <PaymentResult/> </NoHeaderLayout>} /> 
-            <Route 
-              path="/deals" 
-              element={
-                <HeaderFooterlayout>
-                  <DealsPage/>
-                </HeaderFooterlayout>
-              } 
-            />
-            <Route path='/product/:id'
-              element={
-                <HeaderFooterlayout>
-                  <ProductDetail/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path='/produtcpage' element={
-                <HeaderFooterlayout>
-                  <ProductPage/>
-                </HeaderFooterlayout>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <HeaderFooterlayout>
-                  <Profile />
-                </HeaderFooterlayout>
-              }
-            />
-            {currentUser?.admin && (
-              <Route
-                path="/admin"
-                element={
-                  <NoHeaderLayout>
-                    <Dashboard />
-                  </NoHeaderLayout>
-                }
-              />
-            )}
-            <Route path="*" element={<div>404 Not Found</div>} />
-            <Route path="/" element={<MainLayout><div></div></MainLayout>} />
-          </Routes>
-        </div>
-      </Router>
+          )}
+          <Route path="*" element={<div>404 Not Found</div>} />
+          <Route path="/" element={<MainLayout><div></div></MainLayout>} />
+        </Routes>
+      </div>
     </Elements>
   );
 }

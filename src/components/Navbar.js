@@ -42,7 +42,6 @@ const Navbar = () => {
     return (
         <div className="navbar">
             <div className="promotions1">
-                <h2 className='hhhh'>Khuyến mãi đặc biệt</h2>
                 <Slider {...sliderSettings}>
                     <div className="promotion-slide">
                         <img src="https://media.hcdn.vn/hsk/1730345822homecn225226.jpg" alt="Quảng cáo 1" />
@@ -56,36 +55,26 @@ const Navbar = () => {
                 </Slider>
 
                 <div className="promotion-container">
-                <Link to="/deals">
                     <div className="promotion-card">
                         <i className="fas fa-star"></i>
                         <h3>Hasaki Deal</h3>
                     </div>
-                    </Link>
-                    <Link to="/hotdeals">
                     <div className="promotion-card">
                         <i className="fas fa-clock"></i>
                         <h3>Hot Deal</h3>
                     </div>
-                    </Link>
-                    <Link to="/produtcpage">
                     <div className="promotion-card">
                         <i className="fas fa-spray-can-sparkles"></i>
                         <h3>Sản Phẩm</h3>
                     </div>
-                    </Link>
-                    <Link to="/guide">
                         <div className="promotion-card">
                             <i className="fas fa-book"></i>
                             <h3>Cẩm nang</h3>
                         </div>
-                    </Link>
-                    <Link to="/recentlyviewpage">
                         <div className="promotion-card">
                             <i className="fas fa-eye"></i>
                             <h3>Đã xem</h3>
                         </div>
-                    </Link>
                 </div>
                 <div className="products-container">
                     <h2>Sản phẩm nổi bật</h2>

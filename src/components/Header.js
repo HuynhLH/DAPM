@@ -58,7 +58,7 @@ const Header = () => {
         <nav className='navbar1'>
             <div className='navbar-container'>
                 <Link to="/" className='navbar-logo'>
-                    HASAKI.vn <i className="fas fa-leaf"></i>
+                    MYPHAM.VN <i className="fas fa-leaf"></i>
                 </Link>
                 <div className="navbar-search">
                     <form onSubmit={handleSearchSubmit}>
